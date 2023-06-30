@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration{% endblock %}
+
+{% block body %}
+
+<a id="previous-page-btn" href="/">
+    <i class="bi bi-arrow-left"></i>
+  </a>
+  <div id="containerh2">
+    <h2>INSCRIPTION</h2>
+  </div>
+    {{ form_start(registrationForm) }}
+        <div class="col-md-6 offset-md-0">
+            <div class="form-group">
+            {{ form_row(registrationForm.last_name, {
+                'label': 'Nom',
+                'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(registrationForm.first_name, {
+                'label': 'Prénom',
+                'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(registrationForm.email, {
+                'label': 'Adresse mail',
+                'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(registrationForm.plainPassword, {
+                'label': 'Mot de passe',
+                'attr': {'class': 'form-control'}
+                }) }}
+            </div>
+            <div class="button-container">
+                <button type="submit" class="btn btn-costum" id="valider">Valider</button>
+                <button type="reset" class="btn btn-costum" id="annuler">Annuler</button>
+            </div>
+    {{ form_end(registrationForm) }}
+        </div>
+{% endblock %}
