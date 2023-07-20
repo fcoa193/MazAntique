@@ -15,4 +15,15 @@ class ProductController extends AbstractController
             'controller_name' => 'ProductController',
         ]);
     }
+
+    // public function searchAction(Request $request)
+    // {
+    //     $searchForm = $this->createForm(SearchFormType::class);
+
+    //     return $this->render('partials/header.html.twig', [
+    //         'searchForm' => $searchForm->createView(),
+    //     ]);
+    // }
+
+
 }

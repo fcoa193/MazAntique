@@ -7,9 +7,13 @@ home:
   controller: App\Controller\HomeController::homeIndex
 
 register:
-  path: "/registration"
+  path: "/register"
   controller: App\Controller\RegistrationController::register
 
 login:
-  path: "/app_login"
+  path: "/login"
   controller: App\Controller\SecurityController::login
+
+logout:
+  path: "/logout"
+  controller: App\Controller\SecurityController::logout

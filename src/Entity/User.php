@@ -2,12 +2,20 @@
 
 namespace App\Entity;
 
+use App\Entity\Category;
+use App\Form\CategoryType;
+use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
-class User
+#[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte associé à cet email')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -29,6 +37,12 @@ class User
     #[ORM\Column]
     private array $roles = [];
 
+    public function __construct()
+    {
+        // $this->product = new ArrayCollection();
+        // $this->favorites = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -39,7 +53,7 @@ class User
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): static
+    public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
 
@@ -51,7 +65,7 @@ class User
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): static
+    public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
 
@@ -63,11 +77,16 @@ class User
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
     }
 
     public function getPassword(): ?string
@@ -75,7 +94,7 @@ class User
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 
@@ -84,13 +103,58 @@ class User
 
     public function getRoles(): array
     {
-        return $this->roles;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function setRoles(array $roles): static
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Favorite>
+     */
+
+    // public function getFavorites(): Collection
+    // {
+    //     return $this->favorites;
+    // }
+
+    // public function addFavorite(Favorite $favorite): self
+    // {
+    //     if (!$this->favorites->contains($favorite)) {
+    //         $this->favorites->add($favorite);
+    //         $favorite->setUser($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeFavorite(Favorite $favorite): self
+    // {
+    //     if ($this->favorites->removeElement($favorite)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($favorite->getUser() === $this) {
+    //             $favorite->setUser(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
+    public function __toString() {
+        return $this->id;
+    }
+
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }

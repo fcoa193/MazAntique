@@ -1,0 +1,29 @@
+<footer>
+
+
+     <div class="footerRow1">
+          
+    </div>
+    <div class="footerRow2">
+
+    </div>
+    <div class="footerRow3">
+        <h2>Naviguation</h2>
+        {# {% if isUserConnected is same as(false) %} #}
+			<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('register') }}">Inscription</a>
+			<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('login') }}">Connexion</a>
+
+		{# {% else %} #}
+			<a class="linkNavbarDesktop" aria-current="page" href="{{ path('logout') }}">Déconnexion</a>
+			{# <a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_user_index') }}">Profil</a> #}
+        {# {% endif %} #}
+{# 
+        {% if roleUser[0] is same as ("ROLE_USER") %}
+			<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_favorite_index') }}">Favoris</a>
+			<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_home') }}">Accueil</a>
+		{% else %}
+			<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_admin') }}">Accueil</a>
+		{% endif %} #}
+
+    </div> 
+</footer>
