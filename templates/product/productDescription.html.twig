@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product Description{% endblock %}
+
+{% block body %}
+    <main>
+        <div class="bloc_description">
+            <div class="card swiper-slide" id="card_product" data-id="{{ myData.productId }}">
+				<img src="{{ asset('assets/img/products/' ~ myData.productImage) }}" alt="{{ myData.productTitle }}" id="homeProductImage" class="card-img-top">
+				<div class="card-body">
+					<i class="fa fa-heart-o" id="card_heart" aria-hidden="true"></i>
+					<div class="d-flex flex-column justify-content-around">
+						<h5 id="homeProductName" class="card-title">{{ myData.productTitle }}</h5>
+						<p class="card-text" id="homeProductPrice">{{ myData.productPrice }} €</p>
+					</div>
+					<a href="{{ path('productDescription', { 'id': myData.productId }) }}" class="btn btn-primary">Plus d'informations</a>
+				</div>
+			</div>
+        </div>
+    </main>
+{% endblock %}

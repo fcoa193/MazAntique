@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Product
+{% endblock %}
+
+{% block body %}
+	<a id="previous-page-btn" href="/">
+		<i class="bi bi-arrow-left"></i>
+	</a>
+
+	<h1 class="admin_black" id="admin_display_mid">Créer un nouveau produit</h1>
+
+	{{ include('product/_form.html.twig') }}
+
+{% endblock %}

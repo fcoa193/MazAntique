@@ -17,3 +17,43 @@ login:
 logout:
   path: "/logout"
   controller: App\Controller\SecurityController::logout
+
+contact:
+  path: "/contact"
+  controller: App\Controller\HomeController::contact
+
+product:
+  path: "/{id}/productDescription"
+  controller: App\Controller\ProductController::productDescription
+
+search:
+  path: "/partials/_header.html.twig"
+  controller: App\Controller\ProductController::search
+
+panier:
+  path: "/panier"
+  controller: App\Controller\HomeController::panier
+
+addToCart:
+    path: "/addToCart/{productId}"
+    controller: App\Controller\ProductController::addToCart
+
+showCart:
+    path: "/showCart"
+    controller: App\Controller\ProductController::showCart
+
+addProduct:
+  path: "/product_new"
+  controller: App\Controller\ProductController::new
+
+productEdit:
+  path: "/product_edit"
+  controller: App\Controller\ProductController::edit
+
+productDelete:
+  path: "/product_delete"
+  controller: App\Controller\ProductController::delete
+
+delete_form:
+  path: "delete_form"
+  controller: App\Controller\ProductController::deleteForm

@@ -1,10 +1,60 @@
 <header>
-    <div id="topHeader">
+    <div id="top_header" class="d-flex justify-content-around">
         <div id="headerLogo">
-		    <h1>MazAntique</h1>
+		    <a href="{{ path('home') }}" id="head_accueil" class="link-underline-light"><img class="logo" src="/assets/img/icon/logo.png" alt="logo de l'entreprise"></a>
 	    </div> 
-        <div class="searchBar">
-            <input type="search"/>
+        <form id="searchBar_head" class="d-flex" role="search">
+            <input class="form-control me-2" id="searchField_head" type="search" placeholder="Rechercher des articles" aria-label="Search">
+            <button class="btn btn-outline-success" id="btn_search_head" type="submit">Rechercher</button>
+        </form>
+        {# templates/product/header.html.twig #}
+        {# <form id="searchBar_head" class="d-flex" action="{{ path('home') }}" method="GET" role="search">
+            {{ form_widget(searchForm.search, { 'attr': {'class': 'form-control me-2', 'placeholder': 'Rechercher des articles'} }) }}
+            <button class="btn btn-outline-success" id="btn_search_head" type="submit">Rechercher</button>
+        </form> #}
+
+        {# {% if searchResults is not empty %}
+            <div class="search-results">
+                <h3>Search Results</h3>
+                <ul>
+                    {% for product in searchResults %}
+                        <li>{{ product.title }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %} #}
+        
+        <div class="accueil_header">
+            <a href="{{ path('home') }}" id="head_accueil" class="link-underline-light">Accueil</a>        
         </div>
+        
+        {% if app.user %}
+            <div id="logout_header" class="mb-3">
+                {{ app.user.getFirstName }},
+                <a href="{{ path('logout') }}" id="head_logout" class="link-underline-light">Déconnection</a>
+            </div>
+        {% else %}
+            <div id="register_header" class="mb-3">
+                <a href="{{ path('register') }}" id="head_register" class="link-underline-light">Inscription</a>
+            </div>
+            <div id="login_header" class="mb-3">
+                <a href="{{ path('login') }}" id="head_login" class="link-underline-light">Connection</a>
+            </div>
+        {% endif %}
+        <a href="{{ path('panier') }}"><i class="fa fa-shopping-cart" id="icon_cart" class="icon_cart" aria-hidden="true" style="color: #aaaaaa;"></i></a>
     </div>
+    <nav id="low_head" class="nav_bar d-flex">
+        <div class="nav_head">
+            <p class="low_header">Nouveautés</p>
+        </div>
+        <div class="nav_head">
+            <p class="low_header">Promotions</p>
+        </div>
+        <div class="nav_head">
+            <a href="{{ path('panier') }}" class="nav-link active text-light"><p class="low_header">Panier</p></a>
+        </div>
+        <div class="nav_head">
+           <a class="nav-link active text-light" aria-current="page" href="{{ path('contact') }}"> <p class="low_header">Contact</p></a>
+        </div>
+    </nav>
 </header>

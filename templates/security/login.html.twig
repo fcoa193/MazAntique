@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+        <div class="mb-3">
+            {{ app.user.userIdentifier }},
+            <a href="{{ path('logout') }}">Logout</a>
+        </div>
+    {% endif %}
+    <main class="login">
+      <section class="login_container">
+        <div id="title_login">
+          <h2>CONNEXION</h2>
+          <div class="little_border"></div>
+        </div>
+
+        <div class="box_login">
+          <form id="form-login" method="post">
+            <h1 class="h3 mb-3 font-weight-normal"></h1>
+            <div class="form-group">
+                <div class="row">
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Adresse mail" autocomplete="email" required autofocus>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Mot de passe" autocomplete="current-password" required>
+                </div>
+            </div>
+          
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            
+            <div class="form-group mt-4">
+              <button id="login_btn" class="btn btn-lg btn-button" type="submit">
+                Sign in
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+{% endblock %}

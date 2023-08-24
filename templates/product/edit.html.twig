@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Product{% endblock %}
+
+{% block body %}
+    <h1 id="admin_display_mid" class="admin_black">Modifier un produit</h1>
+
+    <a id="previous-page-btn" href="/"><i class="bi bi-arrow-left"></i></a>
+    
+{{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
+    {# {{ include('product/_delete_form.html.twig') }} #}
+{% endblock %}

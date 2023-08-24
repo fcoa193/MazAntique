@@ -1,29 +1,80 @@
 <footer>
+	<nav id="navbarMobile" class="navbar body-tertiary fixed-bottom">
+		<div class="container-fluid mt-1">
+			<a class="navbar-brand" href="#"></a>
+			<button id="btnNavBar" class="navbar-toggler bottom-0 end-0 text-dark rounded-circle me-3 mb-3" style="width:70px; height: 70px;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon " style="width:35px; height: 35px;"></span>
+			</button>
+			<div class="offcanvas offcanvas-end text-bg-dark" style="width:180px" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+				<div class="offcanvas-header">
+					<h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5>
+					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+				</div>
+				<div class="offcanvas-body d-block">
+					<ul class="navbar-nav flex-grow-1 pe-3" style="text-align:right">
 
+          {% if app.user is not null %}
+						{# User is authenticated (connected) #}
+						<li class="nav-item">
+							<a class="nav-link active text-light" aria-current="page" href="{{ path('logout') }}">Déconnexion</a>
+						</li>
 
-     <div class="footerRow1">
-          
-    </div>
-    <div class="footerRow2">
+						<li class="nav-item">
+							<a class="nav-link active text-light" aria-current="page" href="{{ path('app_user_index') }}">Profil</a>
+						</li>
 
-    </div>
-    <div class="footerRow3">
-        <h2>Naviguation</h2>
-        {# {% if isUserConnected is same as(false) %} #}
-			<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('register') }}">Inscription</a>
-			<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('login') }}">Connexion</a>
+              {% if 'ROLE_USER' in app.user.roles %}
+						{# User has ROLE_USER #}
+						<li class="nav-item">
+							{# <a class="nav-link active text-light" aria-current="page" href="{{ path('app_favorite_index') }}">Favoris</a> #}
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active text-light" aria-current="page" href="{{ path('home') }}">Accueil</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active text-light" aria-current="page" href="{{ path('contact') }}">Contact</a>
+						</li>
+              {% else %}
+						{# User has other roles #}
+						<li class="nav-item">
+							<a class="nav-link active text-light" aria-current="page" href="{{ path('app_admin') }}">Accueil</a>
+						</li>
+              {% endif %}
 
-		{# {% else %} #}
-			<a class="linkNavbarDesktop" aria-current="page" href="{{ path('logout') }}">Déconnexion</a>
-			{# <a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_user_index') }}">Profil</a> #}
-        {# {% endif %} #}
-{# 
-        {% if roleUser[0] is same as ("ROLE_USER") %}
-			<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_favorite_index') }}">Favoris</a>
-			<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_home') }}">Accueil</a>
-		{% else %}
-			<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_admin') }}">Accueil</a>
-		{% endif %} #}
+          {% else %}
+						{# User is not authenticated (not connected) #}
+						<li class="nav-item">
+							<a class="nav-link active text-light" aria-current="page" href="{{ path('app_register') }}">Inscription</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active text-light" aria-current="page" href="{{ path('login') }}">Connexion</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active text-light" aria-current="page" href="{{ path('contact') }}">Contact</a>
+						</li>
+          {% endif %}
+					</ul>
+				</div>
+			</div>
+		</nav>
 
-    </div> 
-</footer>
+		{# <div id="navbarDesktop">
+
+			{% if isUserConnected is same as(false) %}
+				<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_register') }}">Inscription</a>
+				<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_login') }}">Connexion</a>
+
+			{% else %}
+				<a class="linkNavbarDesktop" aria-current="page" href="{{ path('app_logout') }}">Déconnexion</a>
+				<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_user_index') }}">Profil</a>
+
+				{% if roleUser[0] is same as ("ROLE_USER") %}
+					<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_favorite_index') }}">Favoris</a>
+					<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_home') }}">Accueil</a>
+				{% else %}
+					<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_admin') }}">Accueil</a>
+				{% endif %}
+			{% endif %}
+		</div> #}
+
+	</footer>
