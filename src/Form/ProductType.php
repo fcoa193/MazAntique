@@ -19,7 +19,7 @@ class ProductType extends AbstractType
             ->add('description', TextType::class)
         ;
     }
-
+    
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

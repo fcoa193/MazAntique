@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Entity;
-
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+
 class Product
 {
     #[ORM\Id]
@@ -24,6 +26,23 @@ class Product
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
+
+    #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy:"product")]
+
+    private $favorites;
+
+    public function __construct()
+    {
+        $this->favorites = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|Favorite[]
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
 
     public function getId(): ?int
     {

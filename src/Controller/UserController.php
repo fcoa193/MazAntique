@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use Random\Engine\Secure;
 use App\Repository\UserRepository;
+use App\Service\PasswordService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/user')]
 class UserController extends AbstractController
 {
+    private $passwordService;
+
+    public function __construct(PasswordService $passwordService)
+    {
+        $this->passwordService = $passwordService;
+    }
+
+    public function updateUserPassword(User $user, string $plainPassword): void
+    {
+        $hashedPassword = $this->passwordService->hashPassword($user, $plainPassword);
+        $user->setPassword($hashedPassword);
+    }
+
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(Security $security): Response
     {

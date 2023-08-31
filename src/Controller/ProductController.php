@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -122,36 +123,7 @@ class ProductController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->request->get('_token'))) {
             $productRepository->remove($product, true);
         }
-        return $this->redirectToRoute('app_home', [
-        ], Response::HTTP_SEE_OTHER);
-    }
 
-
-
-
-    public function addToCart($productId, SessionInterface $session)
-    {
-        // Get the cart data from session
-        $cart = $session->get('cart', []);
-
-        // Add the product to the cart or update its quantity
-        if (isset($cart[$productId])) {
-            $cart[$productId]++;
-        } else {
-            $cart[$productId] = 0;
-        }
-
-        // Store the updated cart data in session
-        $session->set('cart', $cart);
-        return new Response();
-    }
-
-    #[Route('showCart', name: 'showCart', methods: ['GET', 'POST'])]
-    public function showCart(SessionInterface $session)
-    {
-        $cart = $session->get('cart', []);
-        dump($cart);
-
-        return $this->render('home/panier.html.twig', [ 'cart' => $cart]);
+        return $this->render('home/index.html.twig');
     }
 }

@@ -34,14 +34,6 @@ panier:
   path: "/panier"
   controller: App\Controller\HomeController::panier
 
-addToCart:
-    path: "/addToCart/{productId}"
-    controller: App\Controller\ProductController::addToCart
-
-showCart:
-    path: "/showCart"
-    controller: App\Controller\ProductController::showCart
-
 addProduct:
   path: "/product_new"
   controller: App\Controller\ProductController::new
@@ -57,3 +49,7 @@ productDelete:
 delete_form:
   path: "delete_form"
   controller: App\Controller\ProductController::deleteForm
+
+add_to_favorite:
+  path: "add_to_favorite"
+  controller: App\Controller\FavoriteController::addToFavorite

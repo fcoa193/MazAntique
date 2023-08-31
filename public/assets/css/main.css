@@ -155,6 +155,7 @@ footer{
   position: relative;
   font-size: 20px;
   right: -42%;
+  color: black;
   transition: color 0.3s, transform 0.3s;
 }
 .card_heart:hover,

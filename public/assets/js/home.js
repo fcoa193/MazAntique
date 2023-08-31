@@ -27,8 +27,6 @@ if (currentPage === "homePage") {
 
   slideChange.call(swiper);
 
-  // Définition de la fonction slideChange
-
   function slideChange() {
   }
 }
@@ -45,11 +43,17 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!heartIcon.classList.contains("clicked")) {
         heartIcon.classList.add("clicked");
         cartModal.show();
+        heartIcon.setAttribute("data-tooltip", "Retirer du Panier"); // Update tooltip text
         setTimeout(function() {
           cartModal.hide();
         }, 1000);
       } else {
-        heartIcon.classList.remove("clicked"); // Allow unclicking
+        heartIcon.classList.remove("clicked");
+        cartModal.show();
+        heartIcon.setAttribute("data-tooltip", "Ajouter au Panier"); // Restore tooltip text
+        setTimeout(function() {
+          cartModal.hide();
+        }, 1000);
       }
     });
   });

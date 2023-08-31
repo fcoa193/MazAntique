@@ -2,24 +2,24 @@
 
 namespace App\Entity;
 
-use App\Entity\Category;
-use App\Form\CategoryType;
-use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte associé à cet email')]
+#[ORM\Table(name: "user")]
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: "integer")]
+
+
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -37,10 +37,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
+    #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy:"user")]
+
+    private $favorites;
+
     public function __construct()
     {
         // $this->product = new ArrayCollection();
-        // $this->favorites = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|Favorite[]
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
     }
 
     public function getId(): ?int
@@ -121,35 +133,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @return Collection<int, Favorite>
      */
 
-    // public function getFavorites(): Collection
-    // {
-    //     return $this->favorites;
-    // }
-
-    // public function addFavorite(Favorite $favorite): self
-    // {
-    //     if (!$this->favorites->contains($favorite)) {
-    //         $this->favorites->add($favorite);
-    //         $favorite->setUser($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeFavorite(Favorite $favorite): self
-    // {
-    //     if ($this->favorites->removeElement($favorite)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($favorite->getUser() === $this) {
-    //             $favorite->setUser(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
-
     public function __toString() {
         return $this->id;
+    }
+
+    public function hasFavorite(Product $product): bool
+    {
+        foreach ($this->favorites as $favorite) {
+            if ($favorite->getProduct() === $product) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function removeFromFavorite(Favorite $favorite): void
+    {
+        $this->favorites->removeElement($favorite);
+    }
+
+    public function addToFavorite(Favorite $favorite): void
+    {
+        if (!$this->favorites->contains($favorite)) {
+            $this->favorites[] = $favorite;
+        }
     }
 
     public function eraseCredentials()

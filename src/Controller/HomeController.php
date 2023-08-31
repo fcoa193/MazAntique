@@ -35,7 +35,6 @@ class HomeController extends AbstractController
         $response = $request->getContent();
         $myData = json_decode($response);
 
-
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController', 'myData' => $myData, 'isUserConnected' => $isUserConnected, 'roleUser' => $roleUser
         ]);
@@ -61,10 +60,8 @@ class HomeController extends AbstractController
             $isUserConnected = true;
             $roleUser = $security->getUser()->getRoles();
         }
-        // Récupération de toutes les catégories de la table
         $produ = $productRepository->findAll();
 
-        // Construction du tableau à partir des données récupérées
         $myData = [];
         foreach ($produ as $prod) {
             $myData[] = [
@@ -77,7 +74,7 @@ class HomeController extends AbstractController
         }
 
         // $topFavorites = $favoriteRepository->mostFavorites();
-        // var_dump($topFavorites);
+
         return $this->render('/home/index.html.twig', [
             'controller_name' => 'HomeController',
             'myData' => $myData,
