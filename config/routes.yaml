@@ -22,17 +22,13 @@ contact:
   path: "/contact"
   controller: App\Controller\HomeController::contact
 
-product:
-  path: "/{id}/productDescription"
-  controller: App\Controller\ProductController::productDescription
-
-search:
-  path: "/partials/_header.html.twig"
-  controller: App\Controller\ProductController::search
-
 panier:
   path: "/panier"
   controller: App\Controller\HomeController::panier
+
+product:
+  path: "/{id}/productDescription"
+  controller: App\Controller\ProductController::productDescription
 
 addProduct:
   path: "/product_new"
@@ -46,10 +42,18 @@ productDelete:
   path: "/product_delete"
   controller: App\Controller\ProductController::delete
 
-delete_form:
-  path: "delete_form"
-  controller: App\Controller\ProductController::deleteForm
+# delete_form:
+#   path: "/delete_form"
+#   controller: App\Controller\ProductController::deleteForm
 
-add_to_favorite:
-  path: "add_to_favorite"
-  controller: App\Controller\FavoriteController::addToFavorite
+addToCart:
+  path: "/add_to_cart/{productId}"
+  controller: App\Controller\CartController::addToCart
+
+removeFromCart:
+  path: "/remove_from_cart"
+  controller: App\Controller\CartController::removeFromCart
+
+search:
+  path: "/search"
+  controller: App\Controller\ProductController::search

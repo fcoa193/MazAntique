@@ -27,21 +27,21 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy:"product")]
+    #[ORM\OneToMany(targetEntity: Cart::class, mappedBy:"product")]
 
-    private $favorites;
+    private $cart;
 
     public function __construct()
     {
-        $this->favorites = new ArrayCollection();
+        $this->cart = new ArrayCollection();
     }
 
     /**
-     * @return Collection|Favorite[]
+     * @return Collection|Cart[]
      */
-    public function getFavorites(): Collection
+    public function getCart(): Collection
     {
-        return $this->favorites;
+        return $this->cart;
     }
 
     public function getId(): ?int

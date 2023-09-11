@@ -3,9 +3,9 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: FavoriteRepository::class)]
+#[ORM\Entity(repositoryClass: CartRepository::class)]
 
-class Favorite
+class Cart
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,12 +18,13 @@ class Favorite
     
     private $product;
 
-
     #[ORM\ManyToMany(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
 
     private $user;
 
+    private $quantity;
+    #[ORM\JoinColumn(nullable: false)]
 
     public function getId(): ?int
     {
@@ -38,6 +39,18 @@ class Favorite
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }

@@ -18,8 +18,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
-
-
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -37,22 +35,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy:"user")]
-
-    private $favorites;
+    #[ORM\OneToMany(targetEntity: Cart::class, mappedBy:"user")]
+    private $carts;
 
     public function __construct()
     {
         // $this->product = new ArrayCollection();
-        $this->favorites = new ArrayCollection();
+        $this->carts = new ArrayCollection();
     }
 
     /**
-     * @return Collection|Favorite[]
+     * @return Collection|Cart[]
      */
-    public function getFavorites(): Collection
+    public function getCarts(): Collection
     {
-        return $this->favorites;
+        return $this->carts;
     }
 
     public function getId(): ?int
@@ -116,9 +113,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
-
+    
         return array_unique($roles);
     }
 
@@ -130,32 +126,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Favorite>
+     * @return Collection<int, Cart>
      */
 
     public function __toString() {
         return $this->id;
     }
 
-    public function hasFavorite(Product $product): bool
+    public function cartData(Product $product): bool
     {
-        foreach ($this->favorites as $favorite) {
-            if ($favorite->getProduct() === $product) {
+        foreach ($this->carts as $cart) {
+            if ($cart->getProduct() === $product) {
                 return true;
             }
         }
         return false;
     }
 
-    public function removeFromFavorite(Favorite $favorite): void
+    public function removeFromCart(Cart $cart): void
     {
-        $this->favorites->removeElement($favorite);
+        $this->carts->removeElement($cart);
     }
 
-    public function addToFavorite(Favorite $favorite): void
+    public function addToCart(Cart $cart): void
     {
-        if (!$this->favorites->contains($favorite)) {
-            $this->favorites[] = $favorite;
+        if (!$this->carts->contains($cart)) {
+            $this->carts[] = $cart;
         }
     }
 

@@ -12,6 +12,10 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+    App\Repository\PromotionRepository:
+        arguments:
+            $registry: '@doctrine'
+            
     App\Service\PasswordService: ~
     # App\Service\PasswordService:
     #     arguments: ['@security.password_hasher']

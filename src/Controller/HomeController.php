@@ -2,15 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Entity\Product;
-use App\Form\ProductType;
 use App\Controller\ProductController;
 use App\Repository\ProductRepository;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -73,7 +69,7 @@ class HomeController extends AbstractController
             ];
         }
 
-        // $topFavorites = $favoriteRepository->mostFavorites();
+        // $topCarts = $cartRepository->mostCarts();
 
         return $this->render('/home/index.html.twig', [
             'controller_name' => 'HomeController',

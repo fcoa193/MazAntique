@@ -27,9 +27,9 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function getUserFavorites(User $user)
+    public function getUserCarts(User $user)
     {
-        return $user->getFavorites();
+        return $user->getCarts();
     }
 
     public function save(User $entity, bool $flush = false): void
@@ -41,12 +41,4 @@ class UserRepository extends ServiceEntityRepository
         }
     }
 
-    // public function remove(User $entity, bool $flush = false): void
-    // {
-    //     $this->getEntityManager()->remove($entity);
-
-    //     if ($flush) {
-    //         $this->getEntityManager()->flush();
-    //     }
-    // }
 }

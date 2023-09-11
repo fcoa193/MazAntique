@@ -10,14 +10,18 @@
         <div class="d-flex">
             <div class="d-flex flex-column">
 
-
                 <div class="bloc_panier">
                     <h1>Your Cart</h1>
                     {# <p> Votre Panier est vide </p> #}
                     <ul>
-                        {# {% for productId, quantity in cart %}
-                            <li>Product ID: {{ productId }}, Quantity: {{ quantity }}</li>
-                        {% endfor %} #}
+                        {# Add this inside the loop for cart items in your template #}
+                        <form method="POST" action="{{ path('update_cart_item_quantity', {'cartItemId': cartItem.id}) }}">
+                            <input type="number" name="quantity" value="{{ cartItem.quantity }}" min="1">
+                            <button type="submit">Update</button>
+                        </form>
+
+                        {# Add this inside the loop for cart items in your template #}
+                        <a href="{{ path('remove_from_cart', {'cartItemId': cartItem.id}) }}">Remove</a>
                     </ul>
                 </div>
 
@@ -26,7 +30,6 @@
                     <p>les nouveautés</p> 
                 </div>
             </div>
-
 
             <div class="bloc_panier">
                 <p> Produits liés aux articles du panier</p>

@@ -39,15 +39,12 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
     
-    public function findBySearchQuery($searchQuery)
+    public function findByTitle($searchQuery)
     {
-        $queryBuilder = $this->createQueryBuilder('p');
-
-        // Customize the search query according to your entity fields and search logic
-        $queryBuilder->where('p.name LIKE :query')
-            ->orWhere('p.description LIKE :query')
-            ->setParameter('query', '%'.$searchQuery.'%');
-
-        return $queryBuilder->getQuery()->getResult();
+        return $this->createQueryBuilder('p')
+            ->where('p.title LIKE :query')
+            ->setParameter('query', '%' . $searchQuery . '%')
+            ->getQuery()
+            ->getResult();
     }
 }

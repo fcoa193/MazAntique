@@ -11,23 +11,15 @@ security:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
     main:
+      logout:
+        path: logout
+        target: /    
       lazy: true
       provider: app_user_provider
       custom_authenticator: App\Security\UserAuthenticator
-      form_login:
-        login_path: login
-        check_path: login
-        target: home
-
-      logout:
-        path: logout
-        target: home
-
-
+      entry_point: 'App\Security\UserAuthenticator'
   access_control:
     - { path: ^/user, roles: IS_AUTHENTICATED }
-    
-  
 when@test:
   security:
     password_hashers:

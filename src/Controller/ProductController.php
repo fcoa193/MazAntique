@@ -1,17 +1,15 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\Product;
 use App\Form\SearchFormType;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -22,7 +20,6 @@ class ProductController extends AbstractController
     {
         $produ = $productRepository->findAll();
 
-        // Construction du tableau à partir des données récupérées
         $myData = [];
         foreach ($produ as $prod) {
             $myData[] = [
@@ -58,23 +55,21 @@ class ProductController extends AbstractController
         return $this->render('product/productDescription.html.twig', ['myData' => $myData]);
     }
 
-    #[Route('/partials/_header.html.twig', name: 'search', methods: ['GET'])]
+    #[Route('/search', name: 'search', methods: ['GET'])]
     public function search(Request $request, ProductRepository $productRepository)
     {
         $form = $this->createForm(SearchFormType::class);
         $form->handleRequest($request);
-
         $searchResults = [];
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $searchQuery = $form->get('search')->getData();
-            // Perform the search in the database using the title field
-            $searchResults = $productRepository->findBy(['title' => $searchQuery]);
+            $searchResults = $productRepository->findByTitle($searchQuery);
         }
-        return $this->render('/home/index.html.twig', [
+        return $this->render('home/index.html.twig', [
             'searchForm' => $form->createView(),
             'searchResults' => $searchResults,
-        ]);
+        ]);    
     }
 
     #[Route('/new', name: 'product_new', methods: ['GET', 'POST'])]
@@ -87,11 +82,9 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productRepository->save($product, true);
-            $this->addFlash('success', 'Product created successfully.');
-
+            $this->addFlash('success', 'Produit créé!');
             return $this->redirectToRoute('app_home');
         }
-
         return $this->render('product/new.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -99,31 +92,30 @@ class ProductController extends AbstractController
 
     #[Route('/{id}/edit', name: 'product_edit', methods: ['GET', 'POST'])]
     #[IsGranted("ROLE_ADMIN")]
-    public function edit(Request $request, Product $product, ProductRepository $productRepository, Security $security): Response
+    public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
     {
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $productRepository->save($product, true);
-
+            $this->addFlash('success', 'Modification réussite!');
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->render('product/edit.html.twig', [
             'product' => $product,
-            'form' => $form
+            'form' => $form->createView()
         ]);
     }
 
     #[Route('/{id}/delete', name: 'product_delete', methods: ['POST'])]
     #[IsGranted("ROLE_ADMIN")]
-    public function delete(Request $request, Product $product, ProductRepository $productRepository, Security $security): Response
+    public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->request->get('_token'))) {
             $productRepository->remove($product, true);
+            $this->addFlash('success', 'Produit supprimé!');
+            return $this->redirectToRoute('app_home');
         }
-
         return $this->render('home/index.html.twig');
     }
 }

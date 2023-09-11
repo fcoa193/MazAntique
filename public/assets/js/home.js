@@ -31,6 +31,42 @@ if (currentPage === "homePage") {
   }
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+  const addToCartButtons = document.querySelectorAll('.add-to-cart-button');
+
+  addToCartButtons.forEach(button => {
+      button.addEventListener('click', function (event) {
+          event.preventDefault();
+
+          const productId = button.getAttribute('data-product-id');
+          
+          fetch(`/add_to_cart/${productId}`, {
+              method: 'POST',
+          })
+          .then(response => {
+            try {
+                return response.json();
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+                throw error;
+            }
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+          console.error('An error occurred:', error);
+      
+          if (error.response && error.response.status && error.response.statusText) {
+              console.error('Status:', error.response.status, 'Status Text:', error.response.statusText);
+          } else {
+              console.error('Unable to retrieve status information.');
+          }
+      });            
+      });
+  });
+});
+
 // JavaScript to trigger the modal after adding to cart
 
 document.addEventListener("DOMContentLoaded", function () {

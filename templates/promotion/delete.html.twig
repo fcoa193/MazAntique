@@ -1,0 +1,8 @@
+<h2>Delete Promotion</h2>
+
+<p>Are you sure you want to delete the promotion?</p>
+
+<form method="POST" action="{{ path('promotion_delete', {'id': app.request.get('id') }) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.request.get('id')) }}">
+    <button type="submit">Delete</button>
+</form>

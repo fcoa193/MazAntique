@@ -4,7 +4,7 @@
 
 {% block body %}
 
-	{# Inscription Flash #}
+	{# Flash #}
 	{% for label, messages in app.flashes %}
 		{% for message in messages %}
 			<div class="alert alert-{{ label }}">
@@ -51,13 +51,15 @@
 
 								{% if app.user is not null %}
 									{% if 'ROLE_ADMIN' in app.user.roles %}
-										<a href="{{ path('add_to_favorite', {'productId': data.productId }) }}"><i class="fa fa-heart-o card_heart position-relative top-0 start-0" aria-hidden="true" data-target="#cartModal" data-toggle="modal" data-id="{{ data.productId }}" data-tooltip="Ajouter au Panier"></i></a>
+										<button class="add-to-cart-button" data-product-id="{{ data.productId }}">
+											<i class="fa fa-heart-o card_heart position-relative top-0 start-0" aria-hidden="true" data-target="#cartModal" data-toggle="modal" data-id="{{ data.productId }}" data-tooltip="Ajouter au Panier"></i>
+										</button>
 									{% endif %}
 								{% endif %}
 
 								{# {% if app.user is not null %}
 										{% if 'ROLE_USER' in app.user.roles %}
-											<a href="{{ path('add_to_favorite', {'productId': data.productId }) }}"><i class="fa fa-heart-o card_heart position-relative top-0 start-0" aria-hidden="true" data-target="#cartModal" data-toggle="modal" data-id="{{ data.productId }}" data-tooltip="Ajouter au Panier"></i></a>
+											<a href="{{ path('add_to_cart', {'productId': data.productId }) }}"><i class="fa fa-heart-o card_heart position-relative top-0 start-0" aria-hidden="true" data-target="#cartModal" data-toggle="modal" data-id="{{ data.productId }}" data-tooltip="Ajouter au Panier"></i></a>
 										{% endif %}
 								{% endif %} #}
 
@@ -87,5 +89,24 @@
 		{% endif %}
 		<div id="authenticated-status" data-authenticated="{{ isUserConnected }}"></div>
 	</section>
+
+{# ///////////////// search bar ////////////////// #}
+ 
+	{# Render the search form #}
+
+	{# {{ form_start(searchForm) }}
+	{{ form_widget(searchForm) }}
+	<button type="submit">Search</button>
+	{{ form_end(searchForm) }} #}
+
+	{# Display search results if available #}
+	{# {% if searchResults %}
+		<h2>Search Results</h2>
+		<ul>
+			{% for product in searchResults %}
+				<li>{{ product.title }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %} #}
 
 {% endblock %}
