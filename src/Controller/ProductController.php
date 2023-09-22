@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use App\Form\SearchFormType;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -53,23 +54,6 @@ class ProductController extends AbstractController
             "productDescription" => $product->getDescription(),
         ];
         return $this->render('product/productDescription.html.twig', ['myData' => $myData]);
-    }
-
-    #[Route('/search', name: 'search', methods: ['GET'])]
-    public function search(Request $request, ProductRepository $productRepository)
-    {
-        $form = $this->createForm(SearchFormType::class);
-        $form->handleRequest($request);
-        $searchResults = [];
-    
-        if ($form->isSubmitted() && $form->isValid()) {
-            $searchQuery = $form->get('search')->getData();
-            $searchResults = $productRepository->findByTitle($searchQuery);
-        }
-        return $this->render('home/index.html.twig', [
-            'searchForm' => $form->createView(),
-            'searchResults' => $searchResults,
-        ]);    
     }
 
     #[Route('/new', name: 'product_new', methods: ['GET', 'POST'])]
@@ -117,5 +101,28 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
         return $this->render('home/index.html.twig');
+    }
+
+    #[Route('/filter-products/{criteria}', name: 'filter_products', methods: ['GET'])]
+    public function filterProducts(string $criteria, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $repository = $entityManager->getRepository(Product::class);
+        $queryBuilder = $repository->createQueryBuilder('p');
+    
+        $queryBuilder
+            ->where('p.someField = :criteria')
+            ->setParameter('criteria', $criteria);
+    
+        $filteredProducts = $queryBuilder->getQuery()->getResult();
+    
+        $formattedProducts = [];
+        foreach ($filteredProducts as $product) {
+            $formattedProducts[] = [
+                "productId" => $product->getId(),
+                "productTitle" => $product->getTitle(),
+            ];
+        }
+    
+        return new JsonResponse($formattedProducts);
     }
 }

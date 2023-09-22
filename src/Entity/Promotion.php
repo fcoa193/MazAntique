@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\PromotionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PromotionRepository::class)]
@@ -29,11 +30,18 @@ class Promotion
     #[ORM\Column(type: "decimal", precision: 5, scale: 2)]
     private $discountPercentage;
 
+    #[ORM\ManyToMany(targetEntity: Product::class)]
+    #[ORM\JoinColumn(name: "product_id", referencedColumnName: "id", nullable: false)]
+    private $product;
+
+    // #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: "promotions")]
+    // #[ORM\JoinColumn(nullable: false)]
+
     public function getId(): ?int
     {
         return $this->id;
     }
-    
+
     public function getName(): ?string
     {
         return $this->name;
@@ -86,6 +94,17 @@ class Promotion
     public function setDiscountPercentage(float $discountPercentage): self
     {
         $this->discountPercentage = $discountPercentage;
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
         return $this;
     }
 }

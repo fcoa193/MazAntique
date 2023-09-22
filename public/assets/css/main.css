@@ -192,14 +192,14 @@ button {
   border-radius: 5px;
   font-size: small;
   white-space: nowrap;
-  opacity: 0; /* Initially hidden */
+  opacity: 0;
   transition: opacity 0.3s;
   pointer-events: none;
 }
 .card_heart:hover::after,
 .minusAdmin:hover::after,
 .editAdmin:hover::after {
-  opacity: 1; /* Show the tooltip on hover */
+  opacity: 1;
 }
 .minusAdmin:hover,
 .editAdmin:hover{
@@ -249,6 +249,15 @@ button {
   position: relative;
   left: -10%;
   top: 16px;
+}
+.home_modeling{
+height: 100% !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+#home_product{
+  width: 20% !important;
+  margin: 4% 2% !important;
 }
 /* /// Contact Page /// */
 

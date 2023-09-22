@@ -93,4 +93,35 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const filterButtons = document.querySelectorAll('.filter-button');
+    const productList = document.querySelector('.product-list');
+
+    filterButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            const criteria = button.getAttribute('data-criteria');
+            filterProducts(criteria);
+        });
+    });
+
+    function filterProducts(criteria) {
+        fetch(`/filter-products/${criteria}`, {
+            method: 'GET',
+        })
+        .then(response => response.json())
+        .then(data => {
+            productList.innerHTML = '';
+
+            data.forEach(product => {
+                const productItem = document.createElement('li');
+                productItem.textContent = product.productTitle;
+                productList.appendChild(productItem);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+  });
 });

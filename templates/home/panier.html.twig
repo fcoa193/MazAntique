@@ -12,17 +12,39 @@
 
                 <div class="bloc_panier">
                     <h1>Your Cart</h1>
-                    {# <p> Votre Panier est vide </p> #}
-                    <ul>
-                        {# Add this inside the loop for cart items in your template #}
-                        <form method="POST" action="{{ path('update_cart_item_quantity', {'cartItemId': cartItem.id}) }}">
-                            <input type="number" name="quantity" value="{{ cartItem.quantity }}" min="1">
-                            <button type="submit">Update</button>
-                        </form>
 
-                        {# Add this inside the loop for cart items in your template #}
-                        <a href="{{ path('remove_from_cart', {'cartItemId': cartItem.id}) }}">Remove</a>
-                    </ul>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Description</th>
+                                <th>Retirer du panier</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for cartItem in cartItems %}
+                            <tr>
+                                {# <td>{{ cartItem.cartImage }}</td> #}
+                                <td>{{ cartItem.cartProduct }}</td>
+                                <td>{{ cartItem.cartPrice }}</td>
+                                <td>{{ cartItem.cartQuantity }}</td>
+                                <td>{{ cartItem.cartDescription }}</td>
+                                <td>
+                                    <form method="post" action="{{ path('remove_from_cart', {'productId': cartItem.cartId}) }}">
+								        <button type="submit">Retirer</button>
+							        </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <p>Total Price: {{ cartItems|calculateTotalCartPrice }}</p>
+
+                    <a href="{{ path('checkout') }}">Proceed to Checkout</a>
                 </div>
 
                 <div class="bloc_panier">

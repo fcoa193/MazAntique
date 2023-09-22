@@ -2,13 +2,9 @@
 
 namespace App\Repository;
 
-use App\Repository\Favorite;
 use App\Entity\User;
-use App\Entity\Product;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\JsonResponse;
-
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -19,7 +15,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 
- 
 class UserRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

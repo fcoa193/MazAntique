@@ -1,0 +1,7 @@
+<h1>Checkout</h1>
+
+<form method="post">
+    {{ form_row(checkoutForm.shippingAddress) }}
+    {{ form_row(checkoutForm.billingAddress) }}
+    <button type="submit">Place Order</button>
+</form>

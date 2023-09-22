@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Entity;
+
+use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use App\Repository\ProductRepository;
+
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -27,21 +29,26 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\OneToMany(targetEntity: Cart::class, mappedBy:"product")]
+    #[ORM\ManyToMany(targetEntity: Promotion::class, mappedBy: "product")]
+    private $cart;    
 
-    private $cart;
+    #[ORM\ManyToMany(targetEntity: Promotion::class, mappedBy: "product")]
+    private $promotions;
 
     public function __construct()
     {
         $this->cart = new ArrayCollection();
+        $this->promotions = new ArrayCollection();
     }
 
-    /**
-     * @return Collection|Cart[]
-     */
     public function getCart(): Collection
     {
         return $this->cart;
+    }
+
+    public function getPromotions(): Collection
+    {
+        return $this->promotions;
     }
 
     public function getId(): ?int

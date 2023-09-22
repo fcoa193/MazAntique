@@ -51,6 +51,11 @@
 
 								{% if app.user is not null %}
 									{% if 'ROLE_ADMIN' in app.user.roles %}
+
+									<form method="post" action="{{ path('add_to_cart', {'productId': data.productId}) }}">
+										<button type="submit">Ajouter au panier</button>
+									</form>
+
 										<button class="add-to-cart-button" data-product-id="{{ data.productId }}">
 											<i class="fa fa-heart-o card_heart position-relative top-0 start-0" aria-hidden="true" data-target="#cartModal" data-toggle="modal" data-id="{{ data.productId }}" data-tooltip="Ajouter au Panier"></i>
 										</button>
@@ -91,15 +96,16 @@
 	</section>
 
 {# ///////////////// search bar ////////////////// #}
- 
-	{# Render the search form #}
 
-	{# {{ form_start(searchForm) }}
-	{{ form_widget(searchForm) }}
-	<button type="submit">Search</button>
-	{{ form_end(searchForm) }} #}
+        {# Render the search form #}
+
+        {# {{ form_start(searchForm) }}
+        {{ form_widget(searchForm) }}
+        <button type="submit">Search</button>
+        {{ form_end(searchForm) }} #}
 
 	{# Display search results if available #}
+	
 	{# {% if searchResults %}
 		<h2>Search Results</h2>
 		<ul>
@@ -109,4 +115,53 @@
 		</ul>
 	{% endif %} #}
 
+				<button class="filter-button" data-criteria="Canada">Canada</button>
+				<button class="filter-button" data-criteria="USA">USA</button>
+
+				<div class="home_modeling">
+					{% for data in myData %}
+						<div id="home_product" data-id="{{ data.productId }}">
+							<img src="{{ asset('assets/img/products/' ~ data.productImage) }}" alt="{{ data.productTitle }}" id="homeProductImage" class="card-img-top">
+							<div class="card-body">
+								<div class="d-flex justify-content-around">
+{# 
+									{% if app.user is not null %}
+										{% if 'ROLE_ADMIN' in app.user.roles %}
+											<a href="{{ path('delete_form', {'id': data.productId }) }}"><i class="fa fa-minus-square-o minusAdmin" data-id="{{ data.productId }}" aria-hidden="true" data-tooltip="Supprimer un produit"></i></a>
+											<a href="{{ path('product_edit', { 'id': data.productId }) }}"><i class="fa fa-pencil editAdmin" data-id="{{ data.productId }}" aria-hidden="true" data-tooltip="Modifier un produit"></i></a>
+										{% endif %}
+									{% endif %} #}
+
+									{% if app.user is not null %}
+										{% if 'ROLE_ADMIN' in app.user.roles %}
+
+										<form method="post" action="{{ path('add_to_cart', {'productId': data.productId}) }}">
+											<button type="submit">Ajouter au panier</button>
+										</form>
+
+											<button class="add-to-cart-button" data-product-id="{{ data.productId }}">
+												<i class="fa fa-heart-o card_heart position-relative top-0 start-0" aria-hidden="true" data-target="#cartModal" data-toggle="modal" data-id="{{ data.productId }}" data-tooltip="Ajouter au Panier"></i>
+											</button>
+										{% endif %}
+									{% endif %}
+
+									{# {% if app.user is not null %}
+											{% if 'ROLE_USER' in app.user.roles %}
+												<a href="{{ path('add_to_cart', {'productId': data.productId }) }}"><i class="fa fa-heart-o card_heart position-relative top-0 start-0" aria-hidden="true" data-target="#cartModal" data-toggle="modal" data-id="{{ data.productId }}" data-tooltip="Ajouter au Panier"></i></a>
+											{% endif %}
+									{% endif %} #}
+
+									{% if app.user is null %}
+										<i class="fa fa-heart-o card_heart" aria-hidden="true" data-target="#cartModal" data-toggle="modal" data-id="{{ data.productId }}" data-tooltip="Ajouter au Panier"></i>
+									{% endif %}
+								</div>
+								<div class="d-flex flex-column justify-content-around">
+									<h5 id="homeProductName" class="card-title">{{ data.productTitle }}</h5>
+									<p class="card-text" id="homeProductPrice">{{ data.productPrice }} €</p>
+								</div>
+								<a href="{{ path('productDescription', { 'id': data.productId }) }}" class="btn btn-outline-success infoAccueil">Plus d'informations</a>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
 {% endblock %}

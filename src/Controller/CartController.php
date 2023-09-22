@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Entity\Product;
 use App\Entity\Cart;
 use App\Form\CartType;
+use App\Entity\Product;
 use App\Repository\CartRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 
 #[Route('/cart')]
 class CartController extends AbstractController
@@ -53,31 +51,47 @@ class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/cart', name: 'view_cart')]
-    #[IsGranted("ROLE_USER")]
-    public function viewCart(EntityManagerInterface $entityManager): Response
+    #[Route('/panier', name: 'panier')]
+    public function panier(CartRepository $cartRepository): Response
     {
-        /** @var User $user */
         $user = $this->getUser();
+        $cartItems = $cartRepository->findBy(['user' => $user]);
     
-        $cartItems = $entityManager->getRepository(CartItem::class)->findBy(['user' => $user]);
+        $myData = [];
+        foreach ($cartItems as $cartItem) {
+            $product = $cartItem->getProduct();
+            if ($product) {
+                $myData[] = [
+                    "cartId" => $cartItem->getId(),
+                    "cartQuantity" => $cartItem->getQuantity(),
+                    "cartPrice" => $product->getPrice(),
+                    "cartProduct" => $product->getTitle(),
+                    "cartImage" => $product->getImage(),
+                    "cartDescription" => $product->getDescription(),
+                ];
+            }
+        }
     
-        return $this->render('cart/view_cart.html.twig', [
-            'cartItems' => $cartItems,
+        return $this->render('home/panier.html.twig', [
+            'cartItems' => $myData,
         ]);
     }
     
 
     #[Route('/add_to_cart/{productId}', name: 'add_to_cart', methods: ['POST'])]
-    // #[IsGranted("ROLE_USER")]
-    public function addToCart(Product $product, EntityManagerInterface $entityManager): JsonResponse
+    public function addToCart($productId, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-    
         if (!$user) {
             return $this->json(['success' => false, 'message' => 'User is not authenticated.'], 400);
         }
-            $cartItem = $entityManager->getRepository(Cart::class)->findOneBy([
+    
+        $product = $entityManager->getRepository(Product::class)->find($productId);
+        if (!$product) {
+            return $this->json(['success' => false, 'message' => 'Product not found.'], 404);
+        }
+    
+        $cartItem = $entityManager->getRepository(Cart::class)->findOneBy([
             'user' => $user,
             'product' => $product,
         ]);
@@ -89,34 +103,66 @@ class CartController extends AbstractController
             $cartItem->setUser($user);
             $cartItem->setProduct($product);
             $cartItem->setQuantity(1);
-    
             $entityManager->persist($cartItem);
         }
     
         $entityManager->flush();
     
-        return $this->json(['success' => true, 'message' => 'Product added to cart.'], 200);
+        $this->addFlash('success', 'Produit ajouté au panier.');
+    
+        return $this->redirectToRoute('app_home');
     }
     
+    
 
-    #[Route('/cart/remove/{productId}', name: 'remove_from_cart')]
-    #[IsGranted("ROLE_ADMIN")]
-    public function removeFromCart(Product $product, EntityManagerInterface $entityManager): JsonResponse
+    #[Route('/cart/remove/{productId}', name: 'remove_from_cart', methods: ['POST'])]
+    public function removeFromCart(int $productId, EntityManagerInterface $entityManager): JsonResponse
     {
         $user = $this->getUser();
-
+        if (!$user) {
+            return new JsonResponse(['success' => false, 'message' => 'User is not authenticated.'], 400);
+        }
+        $product = $entityManager->getRepository(Product::class)->find($productId);
+        if (!$product) {
+            return new JsonResponse(['success' => false, 'message' => 'Product not found.'], 404);
+        }
         $cart = $entityManager->getRepository(Cart::class)->findOneBy([
             'user' => $user,
             'product' => $product,
         ]);
-
         if ($cart) {
             $entityManager->remove($cart);
             $entityManager->flush();
-
-            return $this->json(['success' => true]);
+    
+            return new JsonResponse(['success' => true, 'message' => 'Produit retiré du panier.']);
         }
-
-        return $this->json(['success' => false, 'message' => 'Product is not in the cart.']);
+    
+        return new JsonResponse(['success' => false, 'message' => 'Produit non trouvé dans le panier.'], 404);
     }
+    
+    // #[Route('/cart/remove/{productId}', name: 'remove_from_cart', methods: ['POST'])]
+    // public function removeFromCart(int $productId, EntityManagerInterface $entityManager): Response
+    // {
+    //     $user = $this->getUser();
+    //     if (!$user) {
+    //         return $this->json(['success' => false, 'message' => 'User is not authenticated.'], 400);
+    //     }
+    //     $product = $entityManager->getRepository(Product::class)->find($productId);
+    //     if (!$product) {
+    //         return $this->json(['success' => false, 'message' => 'Product not found.'], 404);
+    //     }
+    //     $cart = $entityManager->getRepository(Cart::class)->findOneBy([
+    //         'user' => $user,
+    //         'product' => $product,
+    //     ]);
+    //     if ($cart) {
+    //         $entityManager->remove($cart);
+    //         $entityManager->flush();
+
+    //         $this->addFlash('success', 'Produit retiré du panier.');
+
+    //         return $this->redirectToRoute('app_cart_index');
+    //     }
+    //     return $this->json(['success' => false, 'message' => 'Produit non trouvé dans le panier.'], 404);
+    // }
 }

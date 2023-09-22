@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
+use App\Form\SearchFormType;
 use App\Controller\ProductController;
 use App\Repository\ProductRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 
 class HomeController extends AbstractController
 {
@@ -25,8 +26,6 @@ class HomeController extends AbstractController
             $isUserConnected = true;
             $roleUser = $security->getUser()->getRoles();
         }
-
-        // Récupération de toutes les catégories de la table
         $request = $productController->allProducts($productRepository);
         $response = $request->getContent();
         $myData = json_decode($response);
@@ -45,7 +44,6 @@ class HomeController extends AbstractController
     public function contact(){
         return $this->render('home/contact.html.twig');
     }
-
 
     #[Route('/', name: 'home')]
     public function admin_index(ProductRepository $productRepository, Security $security): Response
@@ -69,12 +67,27 @@ class HomeController extends AbstractController
             ];
         }
 
-        // $topCarts = $cartRepository->mostCarts();
-
         return $this->render('/home/index.html.twig', [
             'controller_name' => 'HomeController',
             'myData' => $myData,
             'isUserConnected' => $isUserConnected, 'roleUser' => $roleUser
         ]);
+    }
+
+    #[Route('/search', name: 'search', methods: ['GET'])]
+    public function search(Request $request, ProductRepository $productRepository)
+    {
+        $form = $this->createForm(SearchFormType::class);
+        $form->handleRequest($request);
+        $searchResults = [];
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $searchQuery = $form->get('search')->getData();
+            $searchResults = $productRepository->findByTitle($searchQuery);
+        }
+        return $this->render('home/index.html.twig', [
+            'searchForm' => $form->createView(),
+            'searchResults' => $searchResults,
+        ]);               
     }
 }

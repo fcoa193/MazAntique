@@ -13,16 +13,25 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
     App\Repository\PromotionRepository:
+        public: true
+        tags: ['doctrine.repository_service']
+
+
+    App\Twig\CalculateTotalCartPriceExtension:
         arguments:
-            $registry: '@doctrine'
-            
-    App\Service\PasswordService: ~
-    # App\Service\PasswordService:
-    #     arguments: ['@security.password_hasher']
+            $calculateTotalCartPriceService: '@App\Service\CalculateTotalCartPriceService'
+        tags:
+            - { name: twig.extension }
+
+    App\Repository\CartRepository:
+        tags: ['doctrine.repository_service']
 
     App\Service\EmailService:
         arguments: ['@doctrine.orm.entity_manager']
     
+    App\Service\PasswordService:
+        arguments:
+            $passwordEncoder: '@security.password_encoder'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

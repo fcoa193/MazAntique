@@ -6,6 +6,13 @@ home:
   path: "/"
   controller: App\Controller\HomeController::homeIndex
 
+checkout:
+    path: /checkout
+    controller: App\Controller\CheckoutController::checkout
+    methods: ['GET']
+
+# Compte User
+
 register:
   path: "/register"
   controller: App\Controller\RegistrationController::register
@@ -22,11 +29,17 @@ contact:
   path: "/contact"
   controller: App\Controller\HomeController::contact
 
-panier:
-  path: "/panier"
-  controller: App\Controller\HomeController::panier
+profile:
+  path: "/profile"
+  controller: App\Controller\UserController::profile
 
-product:
+profileEdit:
+  path: "/profile_edit"
+  controller: App\Controller\UserController::editProfile
+  
+# Produit
+
+productDescription:
   path: "/{id}/productDescription"
   controller: App\Controller\ProductController::productDescription
 
@@ -42,18 +55,49 @@ productDelete:
   path: "/product_delete"
   controller: App\Controller\ProductController::delete
 
-# delete_form:
-#   path: "/delete_form"
-#   controller: App\Controller\ProductController::deleteForm
+# Promotion
 
-addToCart:
-  path: "/add_to_cart/{productId}"
-  controller: App\Controller\CartController::addToCart
+promotion:
+  path: "/promotion"
+  controller: App\Controller\PromotionController::listPromotions
+
+addPromotion:
+  path: "/addPromotion"
+  controller: App\Controller\PromotionController::addPromotion
+
+deletePromotion:
+  path: "/{id}/deletePromotion"
+  controller: App\Controller\PromotionController::deletePromotion
+
+editPromotion:
+  path: "/{id}/editPromotion"
+  controller: App\Controller\PromotionController::editPromotion
+
+# Panier
+
+panier:
+  path: "/panier"
+  controller: App\Controller\CartController::panier
+
+add_to_cart:
+    path: '/add_to_cart/{productId}'
+    controller: 'App\Controller\CartController::addToCart'
 
 removeFromCart:
   path: "/remove_from_cart"
   controller: App\Controller\CartController::removeFromCart
 
+
+# Promotion_Product
+
+
+
+# Bar de recherche
+
 search:
   path: "/search"
-  controller: App\Controller\ProductController::search
+  controller: App\Controller\HomeController::search
+
+filter_products:
+    path: '/home/index'
+    controller: App\Controller\ProductController::filterProducts
