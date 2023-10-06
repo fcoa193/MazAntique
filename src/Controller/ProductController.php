@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Liked;
 use App\Entity\Product;
 use App\Form\ProductType;
+use Doctrine\DBAL\Connection;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +18,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
 {
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     #[Route('/product', name: 'product')]
     public function allProducts(ProductRepository $productRepository): Response
     {
@@ -29,6 +38,7 @@ class ProductController extends AbstractController
                 "productPrice" => $prod->getPrice(),
                 "productImage" => $prod->getImage(),
                 "productDescription" => $prod->getDescription(),
+                "productPromotion" => $prod->getPromotion()
             ];
         }
         return $this->json($myData);
@@ -46,6 +56,7 @@ class ProductController extends AbstractController
         if (!$product) {
             throw $this->createNotFoundException('Product not found');
         }
+        $myData = [];
         $myData = [
             "productId" => $product->getId(),
             "productTitle" => $product->getTitle(),
@@ -103,26 +114,48 @@ class ProductController extends AbstractController
         return $this->render('home/index.html.twig');
     }
 
-    #[Route('/filter-products/{criteria}', name: 'filter_products', methods: ['GET'])]
-    public function filterProducts(string $criteria, EntityManagerInterface $entityManager): JsonResponse
+    //// Liked functionality ////
+
+    #[Route('/like_product/{productId}', name: 'like_product', methods: ['GET'])]
+    public function likeProduct(Product $product, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $repository = $entityManager->getRepository(Product::class);
-        $queryBuilder = $repository->createQueryBuilder('p');
-    
-        $queryBuilder
-            ->where('p.someField = :criteria')
-            ->setParameter('criteria', $criteria);
-    
-        $filteredProducts = $queryBuilder->getQuery()->getResult();
-    
-        $formattedProducts = [];
-        foreach ($filteredProducts as $product) {
-            $formattedProducts[] = [
-                "productId" => $product->getId(),
-                "productTitle" => $product->getTitle(),
-            ];
+        $user = $this->getUser();
+
+        $likeRepository = $entityManager->getRepository(Liked::class);
+        $existingLiked = $likeRepository->findOneBy(['user' => $user, 'product' => $product]);
+
+        if (!$existingLiked) {
+            $like = new Liked();
+            $like->setUser($user);
+            $like->setProduct($product);
+            $like->setCreatedAt(new \DateTime());
+            $entityManager->persist($like);
+            $entityManager->flush();
         }
-    
-        return new JsonResponse($formattedProducts);
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(['status' => 'liked']);
+        }
+        return $this->render('home/index.html.twig', [
+            'product' => $product,
+        ]);
+    }
+
+    #[Route('/unlike_product/{productId}', name: 'unlike_product', methods: ['GET'])]
+    public function unlikeProduct(Product $product, Request $request): Response
+    {
+        $user = $this->getUser();
+        $likeRepository = $this->entityManager->getRepository(Liked::class);
+        $existingLiked = $likeRepository->findOneBy(['user' => $user, 'product' => $product]);
+
+        if ($existingLiked) {
+            $this->entityManager->remove($existingLiked);
+            $this->entityManager->flush();
+        }
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(['status' => 'unliked']);
+        }
+        return $this->render('home/index.html.twig', [
+            'product' => $product,
+        ]);
     }
 }

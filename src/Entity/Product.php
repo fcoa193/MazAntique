@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-
 class Product
 {
     #[ORM\Id]
@@ -29,26 +28,36 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\ManyToMany(targetEntity: Promotion::class, mappedBy: "product")]
+    #[ORM\ManyToMany(targetEntity: Cart::class, mappedBy: "product")]
     private $cart;    
 
-    #[ORM\ManyToMany(targetEntity: Promotion::class, mappedBy: "product")]
-    private $promotions;
+    #[ORM\Column(length: 255)]
+    private ?int $promotion;
+
+    #[ORM\OneToMany(targetEntity: Liked::class, mappedBy: "product")]
+    private $liked;
 
     public function __construct()
     {
+        $this->liked = new ArrayCollection();
         $this->cart = new ArrayCollection();
-        $this->promotions = new ArrayCollection();
+    }
+
+    public function getPromotion(): ?int
+    {
+        return $this->promotion;
+    }
+
+    public function setPromotion(int $promotion): static
+    {
+        $this->promotion = $promotion;
+
+        return $this;
     }
 
     public function getCart(): Collection
     {
         return $this->cart;
-    }
-
-    public function getPromotions(): Collection
-    {
-        return $this->promotions;
     }
 
     public function getId(): ?int

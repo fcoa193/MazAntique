@@ -12,17 +12,6 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    App\Repository\PromotionRepository:
-        public: true
-        tags: ['doctrine.repository_service']
-
-
-    App\Twig\CalculateTotalCartPriceExtension:
-        arguments:
-            $calculateTotalCartPriceService: '@App\Service\CalculateTotalCartPriceService'
-        tags:
-            - { name: twig.extension }
-
     App\Repository\CartRepository:
         tags: ['doctrine.repository_service']
 
@@ -33,6 +22,17 @@ services:
         arguments:
             $passwordEncoder: '@security.password_encoder'
 
+    App\Service\SearchService:
+        arguments:
+            $productRepository: '@App\Repository\HomeRepository'
+
+    App\Repository\LikeRepository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
+        arguments:
+            - 'App\Entity\Like'
+        tags: ['doctrine.repository_service']
+        
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:

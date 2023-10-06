@@ -44,7 +44,14 @@ transition-timing-function: ease-out;
   border-top: 1px solid #b5b5b5;
   border-bottom: 1px solid #b5b5b5 ;
 }
-
+header {
+  position: fixed;
+  background-color: #fff;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
 /* /// Log in and Register /// */
 .row {
     display: flex;
@@ -132,6 +139,9 @@ main{
 
 /* /// Home page /// */
 
+.allBody{
+  margin-top: 140px !important;
+}
 footer{
   margin-top: 10%;
 }
@@ -144,6 +154,10 @@ button {
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
+}
+#mostLikedProductsBlock{
+}
+#allProductsBlock{
 }
 /* swiper */
 #product_list{
@@ -160,6 +174,9 @@ button {
 #homeProductImage{
   height: 340px;
   width: 100%;
+}
+#homeProductPromotion{
+  color: red;
 }
 .card_heart {
   position: relative;
@@ -259,6 +276,9 @@ height: 100% !important;
   width: 20% !important;
   margin: 4% 2% !important;
 }
+#allProductsTitle{
+  font-size: 2em !important;
+}
 /* /// Contact Page /// */
 
 #contact_btn{
@@ -284,7 +304,7 @@ height: 100% !important;
 
 .bloc_panier{
   border: 1px solid #b5b5b5;
-  padding: 3%;
+  padding: 10%;
 }
 #bloc_panier_top{
   width: 80%;
@@ -295,4 +315,31 @@ height: 100% !important;
 
 .form_title{
   color: #059eaf;
+}
+.cartTd{
+  padding: 20px 50px;
+}
+#barCart{
+  border-bottom: #048B9A solid 2px !important;
+  width: 100% !important;
+}
+.formGroup{
+  margin: 8%;
+  width: 200%;
+  border-bottom: #048B9A solid 2px !important;
+}
+#productfForm{
+  margin-top: 200px;
+}
+.updateBtnForm{
+  background-color: #048B9A;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.updateBtnForm:hover{
+  background-color: #036F7D;
 }

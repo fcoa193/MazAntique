@@ -1,0 +1,17 @@
+<h1>Most Liked Products</h1>
+
+<div class="home_modeling">
+    {% for productData in mostLikedProducts %}
+            <div id="home_product" data-id="{{ productData.productId }}">
+                <img src="{{ asset('assets/img/products/' ~ productData.productImage) }}" alt="{{ productData.productTitle }}" id="homeProductImage" class="card-img-top">
+                <div class="card-body">
+                    <strong id="home_product">{{ productData['productTitle'] }}</strong><br>
+                    <div class="d-flex flex-column justify-content-around">
+                        Price: {{ productData['productPrice'] }}€<br>
+                        Likes: {{ productData['likeCount'] }} likes
+                    </div>
+                    Description: {{ productData['productDescription'] }}<br>
+                </div>
+            </div>
+    {% endfor %}
+</div

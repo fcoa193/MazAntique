@@ -1,7 +1,14 @@
 <h1>Checkout</h1>
 
+{% if app.flashes('success') is not empty %}
+    <div class="alert alert-success">
+        {{ app.flashes('success')[0] }}
+    </div>
+{% endif %}
+
+
 <form method="post">
     {{ form_row(checkoutForm.shippingAddress) }}
     {{ form_row(checkoutForm.billingAddress) }}
-    <button type="submit">Place Order</button>
+    <button type="submit">Passer la commande</button>
 </form>

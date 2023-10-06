@@ -10,16 +10,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CheckoutController extends AbstractController
 {
+    #[Route('/checkout', name: 'checkout', methods: ['GET', 'POST'])]
     public function checkout(Request $request): Response
     {
         $form = $this->createForm(CheckoutFormType::class);
-    
-        $form->handleRequest($request);
-    
-        if ($form->isSubmitted() && $form->isValid()) {
-            return $this->redirectToRoute('checkout_success');
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {                
+                $this->addFlash('success', 'Your order has been successfully placed.');
+
+                return $this->redirectToRoute('checkout_success');
+            }
         }
-    
+
         return $this->render('checkout/checkout.html.twig', [
             'checkoutForm' => $form->createView(),
         ]);

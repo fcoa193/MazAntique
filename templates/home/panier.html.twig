@@ -4,57 +4,85 @@
 
 {% block body %}
     <main>
-        <div class="bloc_panier" id="bloc_panier_top">
-            <p class="line_panier"> Pub sur les promos </p>
-        </div>
-        <div class="d-flex">
-            <div class="d-flex flex-column">
-
-                <div class="bloc_panier">
-                    <h1>Your Cart</h1>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Description</th>
-                                <th>Retirer du panier</th>
-                                <th>Subtotal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for cartItem in cartItems %}
-                            <tr>
-                                {# <td>{{ cartItem.cartImage }}</td> #}
-                                <td>{{ cartItem.cartProduct }}</td>
-                                <td>{{ cartItem.cartPrice }}</td>
-                                <td>{{ cartItem.cartQuantity }}</td>
-                                <td>{{ cartItem.cartDescription }}</td>
-                                <td>
-                                    <form method="post" action="{{ path('remove_from_cart', {'productId': cartItem.cartId}) }}">
-								        <button type="submit">Retirer</button>
-							        </form>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-
-                    <p>Total Price: {{ cartItems|calculateTotalCartPrice }}</p>
-
-                    <a href="{{ path('checkout') }}">Proceed to Checkout</a>
+    	{# Flash #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
                 </div>
-
-                <div class="bloc_panier">
-                    <p> Vous pourriez aussi aimer:</p>
-                    <p>les nouveautés</p> 
-                </div>
+            {% endfor %}
+        {% endfor %}
+        <div class='allBody'>
+            <div class="bloc_panier" id="bloc_panier_top">
+                <p class="line_panier"> Pub sur les promos </p>
             </div>
+            <div class="d-flex">
+                <div class="d-flex flex-column">
 
-            <div class="bloc_panier">
-                <p> Produits liés aux articles du panier</p>
+                    <div class="bloc_panier">
+                        <h1>Votre panier</h1>
+
+                        <table>
+                            <thead id='theadCart'>
+                                <tr>
+                                    <th>Nom du produit</th>
+                                    <th>Prix</th>
+                                    <th>Promotion</th>
+                                    <th>Quantité</th>
+                                    <th>Retirer du panier</th>
+                                    <th>Sous-total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% set totalPrice = 0 %}
+                                {% for index, cartItem in cartItems %}
+                                    <tr id="barCart">
+                                        <td class="cartTd">{{ cartItem.cartProduct }}</td>
+                                        <td class="cartTd">
+                                            <div class="d-flex flex-column justify-content-around">
+                                                <p class="card-text" id="homeProductPrice">
+                                                    {% if cartItem.cartPromotion > 0 %}
+                                                        {{ (cartItem.cartPrice - (cartItem.cartPrice * (cartItem.cartPromotion / 100))) | number_format(2) }}€
+                                                    {% else %}
+                                                        {{ cartItem.cartPrice | number_format(2) }}€
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <td class="cartTd d-flex ">-{{ cartItem.cartPromotion }}%</td>
+                                        <td class="cartTd">{{ cartItem.cartQuantity }}</td>
+                                        <td class="cartTd">
+                                            <form action="{{ path('remove_from_cart', {'cartId': cartItem.cartId}) }}" method="POST">
+                                                <button type="submit">Retirer du panier</button>
+                                            </form>
+                                        </td>
+                                        <td class="cartTd">
+                                            {% if cartItem.cartPromotion > 0 %}
+                                                {{ (cartItem.cartPrice - (cartItem.cartPrice * (cartItem.cartPromotion / 100))) }}€
+                                            {% else %}
+                                                {{ cartItem.cartPrice * cartItem.cartQuantity }}€
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+
+                                    {% set totalPrice = totalPrice + (cartItem.cartPrice * cartItem.cartQuantity) %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                            <h4>Prix total: {{ totalPrice }} €</h4>
+
+                        <a href="{{ path('checkout') }}">Passer la commande</a>
+                    </div>
+
+                    <div class="bloc_panier">
+                        <p> Vous pourriez aussi aimer:</p>
+                        <p>les nouveautés</p> 
+                    </div>
+                </div>
+
+                <div class="bloc_panier">
+                    <p> Produits liés aux articles du panier</p>
+                </div>
             </div>
         </div>
     </main>

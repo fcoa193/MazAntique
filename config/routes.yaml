@@ -9,9 +9,8 @@ home:
 checkout:
     path: /checkout
     controller: App\Controller\CheckoutController::checkout
-    methods: ['GET']
 
-# Compte User
+# Gestion de compte
 
 register:
   path: "/register"
@@ -37,7 +36,7 @@ profileEdit:
   path: "/profile_edit"
   controller: App\Controller\UserController::editProfile
   
-# Produit
+# Product
 
 productDescription:
   path: "/{id}/productDescription"
@@ -55,25 +54,22 @@ productDelete:
   path: "/product_delete"
   controller: App\Controller\ProductController::delete
 
-# Promotion
+like_product:
+    path: '/like_product/{id}'
+    controller: 'App\Controller\ProductController::likeProduct'
+    methods: ['POST']
 
-promotion:
-  path: "/promotion"
-  controller: App\Controller\PromotionController::listPromotions
+unlike_product:
+    path: '/unlike_product/{id}'
+    controller: 'App\Controller\ProductController::unlikeProduct'
+    methods: ['POST']
 
-addPromotion:
-  path: "/addPromotion"
-  controller: App\Controller\PromotionController::addPromotion
+most_liked_products:
+    path: '/most_liked_products'
+    controller: 'App\Controller\HomeController::mostLikedProducts'
+    methods: ['GET']
 
-deletePromotion:
-  path: "/{id}/deletePromotion"
-  controller: App\Controller\PromotionController::deletePromotion
-
-editPromotion:
-  path: "/{id}/editPromotion"
-  controller: App\Controller\PromotionController::editPromotion
-
-# Panier
+# Cart
 
 panier:
   path: "/panier"
@@ -83,21 +79,12 @@ add_to_cart:
     path: '/add_to_cart/{productId}'
     controller: 'App\Controller\CartController::addToCart'
 
-removeFromCart:
-  path: "/remove_from_cart"
-  controller: App\Controller\CartController::removeFromCart
-
-
-# Promotion_Product
-
-
+remove_from_cart:
+  path: '/remove_from_cart/{cartId}'
+  controller: 'App\Controller\CartController::removeFromCart'
 
 # Bar de recherche
 
 search:
   path: "/search"
   controller: App\Controller\HomeController::search
-
-filter_products:
-    path: '/home/index'
-    controller: App\Controller\ProductController::filterProducts

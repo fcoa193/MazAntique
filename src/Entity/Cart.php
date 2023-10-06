@@ -3,12 +3,13 @@ namespace App\Entity;
 
 use App\Entity\Product;
 use App\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use App\Repository\CartRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CartRepository::class)]
-
 class Cart
 {
     #[ORM\Id]
@@ -25,7 +26,30 @@ class Cart
     private $user;    
 
     #[ORM\Column(type: 'integer')]
-    private $quantity;    
+    private $quantity;  
+    
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: "Cart")]
+    private $cart;   
+
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: "Cart")]
+    #[ORM\JoinColumn(nullable: false)]
+    private $products;
+
+    public function __construct()
+    {
+        $this->cart = new ArrayCollection();
+        return $this->products;
+    }
+
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function getCart(): Collection
+    {
+        return $this->cart;
+    }
 
     public function getId(): ?int
     {

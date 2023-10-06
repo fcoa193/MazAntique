@@ -12,10 +12,12 @@ class SearchFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('search', SearchType::class, [
-                'label' => false,
-                'attr' => ['placeholder' => 'Rechercher des articles', 'class' => 'form-control me-2'],
-            ]);
+        ->add('search', SearchType::class, [
+            'label' => false,
+            'attr' => ['placeholder' => 'Rechercher des articles', 'class' => 'form-control me-2', 'id' => 'searchField_head'],
+            'method' => 'GET',
+        ]);
+    
     }
 
     public function configureOptions(OptionsResolver $resolver): void

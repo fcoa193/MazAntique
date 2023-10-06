@@ -1,11 +1,26 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn_update_admin_song">{{ button_label|default('Update') }}</button>
+<div class="d-flex justify-content-center">
+    {{ form_start(form) }}
+        <div class="formGroup" id="productfForm">
+            {{ form_label(form.title) }}
+            {{ form_widget(form.title) }}
+        </div>
+        <div class="formGroup">
+            {{ form_label(form.image) }}
+            {{ form_widget(form.image) }}
+        </div>
+        <div class="formGroup">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description) }}
+        </div>
+        <div class="formGroup">
+            {{ form_label(form.price) }}
+            {{ form_widget(form.price) }}
+        </div>
+        <div class="formGroup">
+            {{ form_label(form.promotion) }}
+            {{ form_widget(form.promotion) }}
+        </div>
 
-{{ form_end(form) }}
-
-{# <form method="post" action="{{ path('product_edit', {'id': product.id}) }}">
-    {{ form_widget(form) }}
-
-    <button type="submit">Update</button>
-</form> #}
+        <button class="updateBtnForm">{{ button_label|default('Update') }}</button>
+    {{ form_end(form) }}
+</div>
