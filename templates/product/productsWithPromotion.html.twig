@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Products with Promotion</h1>
+    
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ asset('assets/img/products/' ~ product.productImage) }}" class="card-img-top" alt="{{ product.productTitle }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.productTitle }}</h5>
+                        <p class="card-text">{{ product.productDescription }}</p>
+                        <p class="card-text">Price: {{ product.productPrice }} USD</p>
+                        <p class="card-text">Promotion: {{ product.productPromotion }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

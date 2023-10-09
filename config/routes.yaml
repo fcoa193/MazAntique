@@ -67,8 +67,13 @@ unlike_product:
 most_liked_products:
     path: '/most_liked_products'
     controller: 'App\Controller\HomeController::mostLikedProducts'
-    methods: ['GET']
+    methods: ['POST']
 
+products_with_promotion:
+    path: '/products_with_promotion'
+    controller: 'App\Controller\HomeController::productsWithPromotion'
+    methods: ['POST']
+    
 # Cart
 
 panier:

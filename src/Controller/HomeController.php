@@ -25,6 +25,7 @@ class HomeController extends AbstractController
         SearchService $searchService
     ): Response {
         $mostLikedProducts = $this->mostLikedProducts($entityManager);
+        $productsWithPromotion = $this->productsWithPromotion($entityManager);
         $isUserConnected = false;
         $roleUser = '';
         
@@ -41,16 +42,27 @@ class HomeController extends AbstractController
             $searchQuery = $searchForm->get('search')->getData();
             $searchResults = $searchService->searchProducts($searchQuery);
         }
-    
-        $request = $productController->allProducts($productRepository);
-        $response = $request->getContent();
-        $myData = json_decode($response);
-    
+
+        $produ = $productRepository->findAll();
+
+        $myData = [];
+        foreach ($produ as $prod) {
+            $myData[] = [
+                "productId" => $prod->getId(),
+                "productTitle" => $prod->getTitle(),
+                "productPrice" => $prod->getPrice(),
+                "productImage" => $prod->getImage(),
+                "productDescription" => $prod->getDescription(),
+                "productPromotion" => $prod->getPromotion()
+             ];
+        }
+
         return $this->render('home/index.html.twig', [
             'myData' => $myData,
             'isUserConnected' => $isUserConnected,
             'roleUser' => $roleUser,
             'mostLikedProducts' => $mostLikedProducts,
+            'productsWithPromotion' => $productsWithPromotion,
             'searchForm' => $searchForm->createView(),
             'searchResults' => $searchResults,
         ]);
@@ -108,6 +120,7 @@ class HomeController extends AbstractController
                     "productTitle" => $product->getTitle(),
                     "productPrice" => $product->getPrice(),
                     "productImage" => $product->getImage(),
+                    "productPromotion" => $product->getPromotion(),
                     "productDescription" => $product->getDescription(),
                     "likeCount" => $likeCount,
                 ];
@@ -116,4 +129,28 @@ class HomeController extends AbstractController
         return $productDataArray;
     }
     
+    #[Route('/products_with_promotion', name: 'products_with_promotion', methods: ['GET'])]
+    public function productsWithPromotion(EntityManagerInterface $entityManager): array
+    {
+        $query = $entityManager->createQueryBuilder()
+            ->select('p')
+            ->from('App\Entity\Product', 'p')
+            ->where('p.promotion IS NOT NULL')
+            ->getQuery();
+
+        $productsWithPromotion = $query->getResult();
+
+        $productDataArray = [];
+        foreach ($productsWithPromotion as $product) {
+            $productDataArray[] = [
+                "productId" => $product->getId(),
+                "productTitle" => $product->getTitle(),
+                "productPrice" => $product->getPrice(),
+                "productImage" => $product->getImage(),
+                "productPromotion" => $product->getPromotion(),
+                "productDescription" => $product->getDescription(),
+            ];
+        }
+        return $productDataArray;
+    }
 }

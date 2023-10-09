@@ -63,6 +63,7 @@ class ProductController extends AbstractController
             "productPrice" => $product->getPrice(),
             "productImage" => $product->getImage(),
             "productDescription" => $product->getDescription(),
+            "productPromotion" => $product->getPromotion()
         ];
         return $this->render('product/productDescription.html.twig', ['myData' => $myData]);
     }
@@ -116,7 +117,7 @@ class ProductController extends AbstractController
 
     //// Liked functionality ////
 
-    #[Route('/like_product/{productId}', name: 'like_product', methods: ['GET'])]
+    #[Route('/like_product/{productId}', name: 'like_product', methods: ['POST'])]
     public function likeProduct(Product $product, Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
@@ -140,7 +141,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/unlike_product/{productId}', name: 'unlike_product', methods: ['GET'])]
+    #[Route('/unlike_product/{productId}', name: 'unlike_product', methods: ['POST'])]
     public function unlikeProduct(Product $product, Request $request): Response
     {
         $user = $this->getUser();
