@@ -1,80 +1,13 @@
-<footer>
-	<nav id="navbarMobile" class="navbar body-tertiary fixed-bottom">
-		<div class="container-fluid mt-1">
-			<a class="navbar-brand" href="#"></a>
-			<button id="btnNavBar" class="navbar-toggler bottom-0 end-0 text-dark rounded-circle me-3 mb-3" style="width:70px; height: 70px;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon " style="width:35px; height: 35px;"></span>
-			</button>
-			<div class="offcanvas offcanvas-end text-bg-dark" style="width:180px" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-				<div class="offcanvas-header">
-					<h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5>
-					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-				</div>
-				<div class="offcanvas-body d-block">
-					<ul class="navbar-nav flex-grow-1 pe-3" style="text-align:right">
+<footer class="d-flex" id="backgroundFooter">
+	{# <div id="headerLogo">
+		<a href="{{ path('home') }}" id="head_accueil"><img class="logo" src="/assets/img/icon/logo.png" alt="logo de l'entreprise"></a>
+	</div> #}
+	<div id="footerBlocInfo">
+		<p>Adresse : 87f chemin fabry, Toulon</p>
+		<p>Email: francoismaz@gmail.com</p>
+		<p>Tel: 07 45 23 08 75</p>
+	</div>
 
-          {% if app.user is not null %}
-						{# User is authenticated (connected) #}
-						<li class="nav-item">
-							<a class="nav-link active text-light" aria-current="page" href="{{ path('logout') }}">Déconnexion</a>
-						</li>
-
-						<li class="nav-item">
-							<a class="nav-link active text-light" aria-current="page" href="{{ path('app_user_index') }}">Profil</a>
-						</li>
-
-              {% if 'ROLE_USER' in app.user.roles %}
-						{# User has ROLE_USER #}
-						<li class="nav-item">
-							{# <a class="nav-link active text-light" aria-current="page" href="{{ path('app_favorite_index') }}">Favoris</a> #}
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active text-light" aria-current="page" href="{{ path('home') }}">Accueil</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active text-light" aria-current="page" href="{{ path('contact') }}">Contact</a>
-						</li>
-              {% else %}
-						{# User has other roles #}
-						<li class="nav-item">
-							<a class="nav-link active text-light" aria-current="page" href="{{ path('app_admin') }}">Accueil</a>
-						</li>
-              {% endif %}
-
-          {% else %}
-						{# User is not authenticated (not connected) #}
-						<li class="nav-item">
-							<a class="nav-link active text-light" aria-current="page" href="{{ path('app_register') }}">Inscription</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active text-light" aria-current="page" href="{{ path('login') }}">Connexion</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active text-light" aria-current="page" href="{{ path('contact') }}">Contact</a>
-						</li>
-          {% endif %}
-					</ul>
-				</div>
-			</div>
-		</nav>
-
-		{# <div id="navbarDesktop">
-
-			{% if isUserConnected is same as(false) %}
-				<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_register') }}">Inscription</a>
-				<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_login') }}">Connexion</a>
-
-			{% else %}
-				<a class="linkNavbarDesktop" aria-current="page" href="{{ path('app_logout') }}">Déconnexion</a>
-				<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_user_index') }}">Profil</a>
-
-				{% if roleUser[0] is same as ("ROLE_USER") %}
-					<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_favorite_index') }}">Favoris</a>
-					<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_home') }}">Accueil</a>
-				{% else %}
-					<a class="linkNavbarDesktopt" aria-current="page" href="{{ path('app_admin') }}">Accueil</a>
-				{% endif %}
-			{% endif %}
-		</div> #}
-
-	</footer>
+	<p id="footerMarque">© 2023 MazAntique, Inc</p>
+	<p id="footerCondi">Conditions générales</p>
+</footer>

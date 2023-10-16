@@ -28,11 +28,13 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
+    #[ORM\Column(length: 255)]
+    private ?int $promotion;
+
     #[ORM\ManyToMany(targetEntity: Cart::class, mappedBy: "product")]
     private $cart;    
 
-    #[ORM\Column(length: 255)]
-    private ?int $promotion;
+
 
     #[ORM\OneToMany(targetEntity: Liked::class, mappedBy: "product")]
     private $liked;

@@ -3,50 +3,52 @@
 {% block title %}Registration{% endblock %}
 
 {% block body %}
-    <main class="login">
-        <section class="login_container">
-            <div id="title_login">
-                <h2>INSCRIPTION</h2>
-                <div class="little_border"></div>
-            </div>
-            <div class="box_login">
-                {{ form_start(registrationForm) }}
-                    {{ form_row(registrationForm._token) }}
-                        <div class="form-group">
-                            <div class="row">
-                                {{ form_row(registrationForm.last_name, {
-                                'label': 'Nom',
-                                'attr': {'class': 'form-control'}}) }}
+    <div class="backgroundImage">
+        <main class="login">
+            <section class="login_container">
+                <div id="title_login">
+                    <h2>INSCRIPTION</h2>
+                    <div class="little_border"></div>
+                </div>
+                <div class="box_login">
+                    {{ form_start(registrationForm) }}
+                        {{ form_row(registrationForm._token) }}
+                            <div class="form-group">
+                                <div class="row">
+                                    {{ form_row(registrationForm.last_name, {
+                                    'label': 'Nom',
+                                    'attr': {'class': 'form-control'}}) }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                {{ form_row(registrationForm.first_name, {
-                                'label': 'Prénom',
-                                'attr': {'class': 'form-control'}}) }}
+                            <div class="form-group">
+                                <div class="row">
+                                    {{ form_row(registrationForm.first_name, {
+                                    'label': 'Prénom',
+                                    'attr': {'class': 'form-control'}}) }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                {{ form_row(registrationForm.email, {
-                                'label': 'Adresse mail',
-                                'attr': {'class': 'form-control'}}) }}
+                            <div class="form-group">
+                                <div class="row">
+                                    {{ form_row(registrationForm.email, {
+                                    'label': 'Adresse mail',
+                                    'attr': {'class': 'form-control'}}) }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                {{ form_row(registrationForm.plainPassword, {
-                                'label': 'Mot de passe',
-                                'attr': {'class': 'form-control'}
-                                }) }}
+                            <div class="form-group">
+                                <div class="row">
+                                    {{ form_row(registrationForm.plainPassword, {
+                                    'label': 'Mot de passe',
+                                    'attr': {'class': 'form-control'}
+                                    }) }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="button-container">
-                            <button type="submit" class="btn btn-costum" id="inscri_btn">Valider</button>
-                            <button type="reset" class="btn btn-costum" id="annul_btn">Annuler</button>
-                        </div>
-                {{ form_end(registrationForm) }}
-            </div>
-        </section>
-    </main>
+                            <div class="button-container">
+                                <button type="submit" class="btn btn-costum" id="inscri_btn">Valider</button>
+                                <button type="reset" class="btn btn-costum" id="annul_btn">Annuler</button>
+                            </div>
+                    {{ form_end(registrationForm) }}
+                </div>
+            </section>
+        </main>
+    </div>
 {% endblock %}

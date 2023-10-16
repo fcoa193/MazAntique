@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Service\SearchService;
 use App\Form\SearchFormType;
-use App\Controller\ProductController;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -18,14 +17,13 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function homeIndex(
         ProductRepository $productRepository,
-        ProductController $productController,
         Security $security,
         EntityManagerInterface $entityManager,
         Request $request,
         SearchService $searchService
     ): Response {
         $mostLikedProducts = $this->mostLikedProducts($entityManager);
-        $productsWithPromotion = $this->productsWithPromotion($entityManager);
+        $promotionDataArray = $this->productsWithPromotion($entityManager);
         $isUserConnected = false;
         $roleUser = '';
         
@@ -45,9 +43,9 @@ class HomeController extends AbstractController
 
         $produ = $productRepository->findAll();
 
-        $myData = [];
+        $myDataHome = [];
         foreach ($produ as $prod) {
-            $myData[] = [
+            $myDataHome[] = [
                 "productId" => $prod->getId(),
                 "productTitle" => $prod->getTitle(),
                 "productPrice" => $prod->getPrice(),
@@ -58,17 +56,16 @@ class HomeController extends AbstractController
         }
 
         return $this->render('home/index.html.twig', [
-            'myData' => $myData,
+            'myDataHome' => $myDataHome,
             'isUserConnected' => $isUserConnected,
             'roleUser' => $roleUser,
             'mostLikedProducts' => $mostLikedProducts,
-            'productsWithPromotion' => $productsWithPromotion,
+            'productsWithPromotion' => $promotionDataArray,
             'searchForm' => $searchForm->createView(),
             'searchResults' => $searchResults,
         ]);
     }
     
-
     #[Route('/panier', name: 'panier')]
     public function panier(){
         return $this->render('home/panier.html.twig');
@@ -80,17 +77,42 @@ class HomeController extends AbstractController
     }
 
     #[Route('/search', name: 'search', methods: ['GET'])]
-    public function search(Request $request, SearchService $searchService)
+    public function search(Request $request, SearchService $searchService, ProductRepository $productRepository, Security $security, EntityManagerInterface $entityManager)
     {
+        $mostLikedProducts = $this->mostLikedProducts($entityManager);
+        $productsWithPromotion = $this->productsWithPromotion($entityManager);
+        $isUserConnected = false;
+        $roleUser = '';
+
         $form = $this->createForm(SearchFormType::class);
         $form->handleRequest($request);
         $searchResults = [];
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $searchQuery = $form->get('search')->getData();
             $searchResults = $searchService->searchProducts($searchQuery);
         }
+    
+        $produ = $productRepository->findAll();
+
+        $myDataHome = [];
+        foreach ($produ as $prod) {
+            $myDataHome[] = [
+                "productId" => $prod->getId(),
+                "productTitle" => $prod->getTitle(),
+                "productPrice" => $prod->getPrice(),
+                "productImage" => $prod->getImage(),
+                "productDescription" => $prod->getDescription(),
+                "productPromotion" => $prod->getPromotion()
+             ];
+        }
+
         return $this->render('home/index.html.twig', [
+            'myDataHome' => $myDataHome,
+            'isUserConnected' => $isUserConnected,
+            'roleUser' => $roleUser,
+            'mostLikedProducts' => $mostLikedProducts,
+            'productsWithPromotion' => $productsWithPromotion,
             'searchForm' => $form->createView(),
             'searchResults' => $searchResults,
         ]);
@@ -140,9 +162,9 @@ class HomeController extends AbstractController
 
         $productsWithPromotion = $query->getResult();
 
-        $productDataArray = [];
+        $promotionDataArray = [];
         foreach ($productsWithPromotion as $product) {
-            $productDataArray[] = [
+            $promotionDataArray[] = [
                 "productId" => $product->getId(),
                 "productTitle" => $product->getTitle(),
                 "productPrice" => $product->getPrice(),
@@ -151,6 +173,6 @@ class HomeController extends AbstractController
                 "productDescription" => $product->getDescription(),
             ];
         }
-        return $productDataArray;
+        return $promotionDataArray;
     }
 }

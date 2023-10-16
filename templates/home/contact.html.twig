@@ -1,96 +1,98 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact{% endblock %}
+{% block title %}Contact
+{% endblock %}
 
 {% block body %}
-    <main>
-        <div class="allBody pt-5">
-            <div class="pub_contact d-flex justify-content-around">
-                <div class="slogan_contact">
-                    
-                    <p>Vous êtes client de MazAntique</br> et vous souhaitez en savoir plus sur votre commande?</p>
-                </div>
-                <div class="slogan_contact">
+	<main>
+		<div class="allBody">
+			<div class="pub_contact d-flex justify-content-around">
+				<div class="slogan_contact">
 
-                    <p>Vous souhaitez évoquer un partenariat avec MazAntique?</p>
-                </div>
-                <div class="slogan_contact">
+					<p>Vous êtes client de MazAntique</p>
+				</br>
+				et vous souhaitez en savoir plus sur votre commande?</p>
+		</div>
+		<div class="slogan_contact">
 
-                    <p>Vous souhaitez en savoir plus sur nous?</p>
-                </div>
-            </div>
-            <div class="bottom_contact">
-                <form id="form-login" action="https://formsubmit.co/francoismazerbourg@gmail.com" method="POST">
-                    <h1 class="h3 mb-3 font-weight-normal"></h1>
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="fname">Prénom:</label><br>
-                            {% if app.user %}
-                                <input type="text" id="fname" value="{{ app.user.getFirstName }}" class="form-control" name="fname" required><br>
-                            {% else %}
-                                <input type="text" id="fname" placeholder="Prénom" class="form-control" name="fname" required><br>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="fname">Nom:</label><br>
-                            {% if app.user %}
-                                <input type="text" id="lname" value="{{ app.user.getLastName }}" class="form-control" name="lname" required>
-                            {% else %}
-                                <input type="text" id="lname" placeholder="Nom" class="form-control" name="lname" required>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="email">Email:</label><br>
-                            {% if app.user %}
-                                <input type="email" value="{{ app.user.getEmail }}" name="email" id="inputEmail" class="form-control" placeholder="Adresse mail" autocomplete="email" required autofocus>
-                            {% else %}
-                                <input type="email" placeholder="Email" name="email" id="inputEmail" class="form-control" placeholder="Adresse mail" autocomplete="email" required autofocus>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="object">Message:</label><br>
-                            <textarea rows="4" id="object" placeholder="Information du contact" class="form-control" name="object" required></textarea>
-                        </div>
-                    </div>
+			<p>Vous souhaitez évoquer un partenariat avec MazAntique?</p>
+		</div>
+		<div class="slogan_contact">
 
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                    <input type="hidden" name="_subject" value="Mail du site MazAntique!">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_next" value="http://127.0.0.1:8000">
-                    <div class="form-group mt-4">
-                    <!-- Button trigger modal -->
-                        <button type="submit" id="contact_btn" class="btn btn-lg btn-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            Envoyer
-                        </button>
-                    </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Message bien envoyé!</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Merci pour votre Message, nous vous réponderons sous-peu
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <div class="localisation d-flex justify-content-center mt-5">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2912.5484111063456!2d5.961651511240477!3d43.11400438701781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c91beafc310d17%3A0x2937d36d22a42b1e!2s87%20Chem.%20Fabry%2C%2083000%20Toulon!5e0!3m2!1sen!2sfr!4v1692172249480!5m2!1sen!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-            </div>
-        </div>
-    </main>
-{% endblock %}
+			<p>Vous souhaitez en savoir plus sur nous?</p>
+		</div>
+	</div>
+	<div class="bottom_contact">
+		<form id="form-login" action="https://formsubmit.co/francoismazerbourg@gmail.com" method="POST">
+			<h1 class="h3 mb-3 font-weight-normal"></h1>
+			<div class="form-group">
+				<div class="row">
+					<label for="fname">Prénom:</label><br>
+					{% if app.user %}
+						<input type="text" id="fname" value="{{ app.user.getFirstName }}" class="form-control" name="fname" required><br>
+					{% else %}
+						<input type="text" id="fname" placeholder="Prénom" class="form-control" name="fname" required><br>
+					{% endif %}
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<label for="fname">Nom:</label><br>
+					{% if app.user %}
+						<input type="text" id="lname" value="{{ app.user.getLastName }}" class="form-control" name="lname" required>
+					{% else %}
+						<input type="text" id="lname" placeholder="Nom" class="form-control" name="lname" required>
+					{% endif %}
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<label for="email">Email:</label><br>
+					{% if app.user %}
+						<input type="email" value="{{ app.user.getEmail }}" name="email" id="inputEmail" class="form-control" placeholder="Adresse mail" autocomplete="email" required autofocus>
+					{% else %}
+						<input type="email" placeholder="Email" name="email" id="inputEmail" class="form-control" placeholder="Adresse mail" autocomplete="email" required autofocus>
+					{% endif %}
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<label for="object">Message:</label><br>
+					<textarea rows="4" id="object" placeholder="Information du contact" class="form-control" name="object" required></textarea>
+				</div>
+			</div>
+
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+			<input type="hidden" name="_subject" value="Mail du site MazAntique!">
+			<input type="hidden" name="_captcha" value="false">
+			<input type="hidden" name="_next" value="http://127.0.0.1:8000">
+			<div
+				class="form-group mt-4">
+				<!-- Button trigger modal -->
+				<button type="submit" id="contact_btn" class="btn btn-lg btn-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+					Envoyer
+				</button>
+			</div>
+			<!-- Modal -->
+			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="staticBackdropLabel">Message bien envoyé!</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							Merci pour votre Message, nous vous réponderons sous-peu
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="localisation d-flex justify-content-center mt-5">
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2912.5484111063456!2d5.961651511240477!3d43.11400438701781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c91beafc310d17%3A0x2937d36d22a42b1e!2s87%20Chem.%20Fabry%2C%2083000%20Toulon!5e0!3m2!1sen!2sfr!4v1692172249480!5m2!1sen!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+		</div>
+	</div>
+</div></main>{% endblock %}

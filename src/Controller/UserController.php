@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use App\Service\PasswordService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
@@ -67,6 +68,16 @@ class UserController extends AbstractController
         }
         return $this->render('profile/edit.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+    
+    #[Route('/home/adminUsers', name: 'admin_users')]
+    public function listUsers(UserRepository $userRepository): Response
+    {
+        $users = $userRepository->findAll();
+        dump($users);
+        return $this->render('home/adminUsers.html.twig', [
+            'users' => $users,
         ]);
     }
 }

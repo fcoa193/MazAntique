@@ -1,37 +1,37 @@
-<h1>Produits les plus likés</h1>
+<h1>Produits les plus populaires</h1>
 
 <div class="home_modeling">
-    {% for productData in mostLikedProducts %}
-            <div id="home_product" data-id="{{ productData.productId }}">
-                <img src="{{ asset('assets/img/products/' ~ productData.productImage) }}" alt="{{ productData.productTitle }}" id="homeLikedProductImage" class="card-img-top">
-                <div class="card-body">
-					<h5 id="homeProductNameMost" class="card-title">{{ productData.productTitle }}</h5>
-					<p class="card-text" id="homeProductPrice">
-						{% if productData.productPromotion > 0 %}
-							Prix : {{ (productData.productPrice - (productData.productPrice * (productData.productPromotion / 100))) | number_format(2) }} €
+		{% for productData in mostLikedProducts %}
+				<div id="home_product" data-id="{{ productData.productId }}">
+					<img src="{{ asset('assets/img/products/' ~ productData.productImage) }}" alt="{{ productData.productTitle }}" id="homeLikedProductImage" class="card-img-top">
+					<div class="card-body">
+						<h5 id="homeProductNameMost" class="card-title">{{ productData.productTitle }}</h5>
+						<p class="card-text" id="homeProductPrice">
+							{% if productData.productPromotion > 0 %}
+								Prix : {{ (productData.productPrice - (productData.productPrice * (productData.productPromotion / 100))) | number_format(2) }} €
+							{% else %}
+								Prix : {{ productData.productPrice | number_format(2) }} €
+							{% endif %}
+						</p>
+						{% if productData['likeCount'] == 1 %}
+							<div id="likeProductArray" class="d-flex flex-column justify-content-around">
+								Likes: {{ productData['likeCount'] }} like
+							</div>
 						{% else %}
-							Prix : {{ productData.productPrice | number_format(2) }} €
+							<div id="likeProductArray" class="d-flex flex-column justify-content-around">
+								Likes: {{ productData['likeCount'] }} likes
+							</div>
 						{% endif %}
-					</p>
-					{% if productData['likeCount'] == 1 %}
-						<div id="likeProductArray" class="d-flex flex-column justify-content-around">
-							Likes: {{ productData['likeCount'] }} like
-						</div>
-					{% else %}
-						<div id="likeProductArray" class="d-flex flex-column justify-content-around">
-							Likes: {{ productData['likeCount'] }} likes
-						</div>
-					{% endif %}
 
 
-					<p class="card-text me-5" id="promotionProductArray">
-						{% if productData.productPromotion > 0 %}
-							Promotion : - {{ (productData.productPromotion) }} %
-						{% else %}
-							Promotion : - 0 %
-						{% endif %}
-					</p>
-                </div>
-            </div>
-    {% endfor %}
+						<p class="card-text me-5" id="promotionProductArray">
+							{% if productData.productPromotion > 0 %}
+								Promotion : - {{ (productData.productPromotion) }} %
+							{% else %}
+								Promotion : - 0 %
+							{% endif %}
+						</p>
+					</div>
+				</div>
+		{% endfor %}
 </div

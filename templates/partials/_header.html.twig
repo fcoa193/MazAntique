@@ -28,9 +28,10 @@
         {% endif %}
         <a href="{{ path('panier') }}"><i class="fa fa-shopping-cart" id="icon_cart" aria-hidden="true" style="color: #aaaaaa;"></i></a>
     </div>
+    
     <nav id="low_head" class="nav_bar d-flex">
         <div class="nav_head">
-            <p class="low_header">Nouveautés</p>
+            <p class="low_header">Les plus populaires</p>
         </div>
         <div class="nav_head">
             <a href="{{ path('panier') }}" class="nav-link active text-light"><p class="low_header">Panier</p></a>
@@ -41,5 +42,14 @@
         <div class="nav_head">
            <a class="nav-link active text-light" aria-current="page" href="{{ path('contact') }}"> <p class="low_header">Contact</p></a>
         </div>
+
+        {% if app.user is not null %}
+			{% if 'ROLE_ADMIN' in app.user.roles %}
+                <div class="nav_head">
+                    <a href="{{ path('admin_users') }}" class="nav-link active text-light"><p class="low_header">Utilisateurs</p></a>
+                </div>
+        	{% endif %}
+		{% endif %}
+
     </nav>
 </header>

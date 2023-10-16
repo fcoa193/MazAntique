@@ -17,7 +17,6 @@ class SearchFormType extends AbstractType
             'attr' => ['placeholder' => 'Rechercher des articles', 'class' => 'form-control me-2', 'id' => 'searchField_head'],
             'method' => 'GET',
         ]);
-    
     }
 
     public function configureOptions(OptionsResolver $resolver): void

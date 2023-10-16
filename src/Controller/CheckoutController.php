@@ -20,11 +20,9 @@ class CheckoutController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {                
                 $this->addFlash('success', 'Your order has been successfully placed.');
-
                 return $this->redirectToRoute('checkout_success');
             }
         }
-
         return $this->render('checkout/checkout.html.twig', [
             'checkoutForm' => $form->createView(),
         ]);

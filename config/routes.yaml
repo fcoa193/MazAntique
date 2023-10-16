@@ -36,6 +36,10 @@ profileEdit:
   path: "/profile_edit"
   controller: App\Controller\UserController::editProfile
   
+adminUsers:
+  path: "/admin_users"
+  controller: App\Controller\UserController::listUsers
+
 # Product
 
 productDescription:

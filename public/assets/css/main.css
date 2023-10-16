@@ -14,9 +14,17 @@
 #top_header{
   margin-top: 2%;
 }
+#searchResult{
+  display: flex;
+  justify-content: center;
+}
 #searchBar_head{
   height: 3%;
 }
+#searchField_head{
+    border: 3px solid #d8d8d8 !important;
+}
+
 #btn_search_head, .infoAccueil{
   color: #048B9A;
 }
@@ -26,6 +34,7 @@
 }
 #searchField_head{
   border: 1px solid #b5b5b5 !important;
+  width: 80% !important;
 }
 .low_header{
   color: #b5b5b5;
@@ -55,6 +64,26 @@ header {
 #icon_cart{
   font-size: larger;
 }
+/* /// Footer /// */
+
+#backgroundFooter{
+  height: 200px !important;
+  background-color: #2D2D2D;
+  color: white;
+}
+#footerBlocInfo{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+#footerCondi{
+  margin-top: 80px;
+  margin-right: 80px;
+
+}
+#footerMarque{
+  margin: 150px auto 0px auto;
+} 
 /* /// Log in and Register /// */
 .row {
     display: flex;
@@ -98,7 +127,7 @@ input{
   margin-top: 6%;
 }
 main{
-  margin-bottom: 30vw;
+  padding-bottom: 30vw;
 }
 .little_border{
   margin-left: 10px;
@@ -125,6 +154,10 @@ main{
   cursor: pointer;
   transition: 500ms;
 }
+.backgroundImage{
+  background-image: url("../img/icon/backgroundImage.jpg");
+  height: 120%;
+}
 #inscri_btn{
   transform: translate(-110%, 50%) !important;
 }
@@ -142,13 +175,12 @@ main{
 
 /* /// Home page /// */
 
-.allBody{
-  margin-top: 140px !important;
+.allBody, #adminUsers, .login{
+  padding-top: 15% !important;
 }
-footer{
-  margin-top: 10%;
+.flashTop{
+  padding-top: 15%;
 }
-
 button {
 	background: none;
 	color: inherit;
@@ -157,9 +189,6 @@ button {
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
-}
-.flashTop{
-  margin-top: 150px;
 }
 /* swiper */
 #product_list{
@@ -194,6 +223,7 @@ button {
 #homeProductName, #homeProductPrice, #moreInformation, #likeProductArray, #promotionProductArray {
   margin-left: 3%;
 }
+
 #homeProductNameProducts, #homeProductNameMost{
   margin: 4% 0% 3% 3%;
 }
@@ -262,11 +292,8 @@ button {
   max-width: 100% !important;
   min-height: 0;
   min-width: 0;
-}
-.swiper-wrapper{
-  max-height: 100%;
-  height: 100%t;
-  display: flex;
+  z-index: -1 !important;
+  cursor: pointer !important;
 }
 .swiper-container{
   height: 100%; 
@@ -276,6 +303,18 @@ button {
   max-width: 100vw; 
   width: 100%;
   overflow: hidden;
+}
+.swiper-wrapper{
+  max-height: 100%;
+  height: 100%;
+  display: flex;
+  z-index: -1 !important;
+}
+.card-body{
+  z-index: 8 !important;
+}
+#addToCartSwiper{
+  z-index: 8 !important;
 }
 #addButton{
   margin: 10% auto 10% auto;
@@ -339,15 +378,18 @@ height: 100% !important;
   padding-top: 8em;
 }
 
-/* /// Panier /// */
+/* /// Cart /// */
 
 .bloc_panier{
   border: 1px solid #b5b5b5;
   padding: 10%;
 }
-#bloc_panier_top{
-  width: 80%;
-  margin: auto;
+#trCart{
+  border-bottom: 2px solid #b5b5b5;
+}
+#thCartPrice{
+  position: relative;
+  left: 6%;
 }
 
 /* /// Forms /// */
@@ -380,4 +422,23 @@ height: 100% !important;
 }
 .updateBtnForm:hover{
   background-color: #036F7D;
+}
+
+/* /// Amin Users /// */
+
+.thAdminUser{
+  padding: 6%;
+  border-bottom: 2px solid #b5b5b5;
+}
+.tdAdminUser{
+  padding: 8%;
+  border-bottom: #048B9A solid 2px !important;
+}
+#tabAdminUsers{
+  margin: auto;
+}
+#adminUsers{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

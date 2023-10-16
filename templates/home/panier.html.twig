@@ -1,94 +1,91 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Panier{% endblock %}
+{% block title %}Panier
+{% endblock %}
 
 {% block body %}
 	{% if app.user is null %}
-        <h2 class='allBody' id="profileDisconnected">Velliez vous connecter pour avoir accès à votre panier.</h2>
-    {% else %}
-        <main>
-            {# Flash #}
-            <div class="flashTop">
-                {% for label, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ label }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-            </div>
+		<h2 class='allBody' id="profileDisconnected">Velliez vous connecter pour avoir accès à votre panier.</h2>
+	{% else %}
+		<main>
+			{# Flash #}
+			<div class="flashTop">
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						<div class="alert alert-{{ label }}">
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+			</div>
 
-            <div class='allBody'>
-                <div class="bloc_panier" id="bloc_panier_top">
-                    <p class="line_panier"> Pub sur les promos </p>
-                </div>
-                <div class="d-flex">
-                    <div class="d-flex flex-column">
+			<div class='allBody'>
+				<div class="d-flex">
+					<div class="d-flex flex-column">
 
-                        <div class="bloc_panier">
-                            <h1>Votre panier</h1>
+						<div class="bloc_panier">
+							<h1>Récapitulatif de commande</h1>
 
-                            <table>
-                                <thead id='theadCart'>
-                                    <tr>
-                                        <th>Nom du produit</th>
-                                        <th>Prix</th>
-                                        <th>Promotion</th>
-                                        <th>Quantité</th>
-                                        <th>Retirer du panier</th>
-                                        <th>Sous-total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% set totalPrice = 0 %}
-                                    {% for index, cartItem in cartItems %}
-                                        <tr id="barCart">
-                                            <td class="cartTd">{{ cartItem.cartProduct }}</td>
-                                            <td class="cartTd">
-                                                <div class="d-flex flex-column justify-content-around">
-                                                    <p class="card-text" id="homeProductPrice">
-                                                        {% if cartItem.cartPromotion > 0 %}
-                                                            {{ (cartItem.cartPrice - (cartItem.cartPrice * (cartItem.cartPromotion / 100))) | number_format(2) }}€
-                                                        {% else %}
-                                                            {{ cartItem.cartPrice | number_format(2) }}€
-                                                        {% endif %}
-                                                    </p>
-                                                </div>
-                                            </td>
-                                            <td class="cartTd d-flex ">-{{ cartItem.cartPromotion }}%</td>
-                                            <td class="cartTd">{{ cartItem.cartQuantity }}</td>
-                                            <td class="cartTd">
-                                                <form action="{{ path('remove_from_cart', {'cartId': cartItem.cartId}) }}" method="POST">
-                                                    <button type="submit">Retirer du panier</button>
-                                                </form>
-                                            </td>
-                                            <td class="cartTd">
-                                                {% if cartItem.cartPromotion > 0 %}
-                                                    {% set subTotal = (cartItem.cartPrice - (cartItem.cartPrice * (cartItem.cartPromotion / 100))) * cartItem.cartQuantity %}
-                                                    {{ subTotal }}€
-                                                    {% set totalPrice = totalPrice + subTotal %}
-                                                {% else %}
-                                                    {% set subTotal = cartItem.cartPrice * cartItem.cartQuantity %}
-                                                    {{ subTotal }}€
-                                                    {% set totalPrice = totalPrice + subTotal %}
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                                <h4>Prix total: {{ totalPrice }} €</h4>
+							<table>
+								<thead id='theadCart'>
+									<tr id="trCart">
+										<th>Nom du produit</th>
+										<th id='thCartPrice'>Prix</th>
+										<th>Promotion</th>
+										<th>Quantité</th>
+										<th>Sous-total</th>
+										<th>Retirer du panier</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% set totalPrice = 0 %}
+									{% for index, cartItem in cartItems %}
+										<tr id="barCart">
+											<td class="cartTd">{{ cartItem.cartProduct }}</td>
+											<td class="cartTd">
+												<div class="d-flex flex-column justify-content-around">
+													<p class="card-text" id="homeProductPrice">
+														{% if cartItem.cartPromotion > 0 %}
+															{{ (cartItem.cartPrice - (cartItem.cartPrice * (cartItem.cartPromotion / 100))) | number_format(2) }}€
+														{% else %}
+															{{ cartItem.cartPrice | number_format(2) }}€
+														{% endif %}
+													</p>
+												</div>
+											</td>
+											<td class="cartTd d-flex ">-{{ cartItem.cartPromotion }}%</td>
+											<td class="cartTd"><input type="number" value="{{ cartItem.cartQuantity }}"></td>
+											<td class="cartTd">
+												{% if cartItem.cartPromotion > 0 %}
+													{% set subTotal = (cartItem.cartPrice - (cartItem.cartPrice * (cartItem.cartPromotion / 100))) * cartItem.cartQuantity %}
+													{{ subTotal }}€
+													{% set totalPrice = totalPrice + subTotal %}
+												{% else %}
+													{% set subTotal = cartItem.cartPrice * cartItem.cartQuantity %}
+													{{ subTotal }}€
+													{% set totalPrice = totalPrice + subTotal %}
+												{% endif %}
+											</td>
+											<td class="cartTd">
+												<form action="{{ path('remove_from_cart', {'cartId': cartItem.cartId}) }}" method="POST">
+													<button type="submit">
+														<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewbox="0 0 384 512"><path d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"/></svg>
+													</button>
+												</form>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+							<h4>Prix total:
+								{{ totalPrice }}
+								€</h4>
 
-                            <a href="{{ path('checkout') }}">Passer la commande</a>
-                        </div>
-
-                        <div class="bloc_panier">
-                            <p> Vous pourriez aussi aimer:</p>
-                            <p>les nouveautés</p> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-    {% endif %}
+							<a href="{{ path('checkout') }}">Passer la commande</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+	{% endif %}
 {% endblock %}

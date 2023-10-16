@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Home
+{% endblock %}
 
 {% block body %}
 
@@ -14,105 +15,59 @@
 			{% endfor %}
 		{% endfor %}
 	</div>
+	
+	<main>
+		<section
+			id="homePage">
 
-	<main class='allBody'>
-		<section id="homePage">
-		{# Swiper #}
-		<div class="swiper-container" id="product_container">
-			<div class="swiper-wrapper" id="product_list">
-				{% for data in myData %}
-					<div class="card swiper-slide" id="card_product" data-id="{{ data.productId }}">
-						<img src="{{ asset('assets/img/products/' ~ data.productImage) }}" alt="{{ data.productTitle }}" id="homeProductImage" class="card-img-top">
-						<div class="card-body">
-							<div class="d-flex justify-content-around">
-
-								{% if app.user is not null %}
-									{% if 'ROLE_ADMIN' in app.user.roles %}
-										<a href="{{ path('delete_form', {'id': data.productId }) }}"><i class="fa fa-minus-square-o minusAdmin" data-id="{{ data.productId }}" aria-hidden="true" data-tooltip="Supprimer un produit"></i></a>
-										<a href="{{ path('product_edit', { 'id': data.productId }) }}"><i class="fa fa-pencil editAdmin" data-id="{{ data.productId }}" aria-hidden="true" data-tooltip="Modifier un produit"></i></a>
-									{% endif %}
-								{% endif %}
-
-								{% if app.user is not null %}
-									{% if 'ROLE_USER' in app.user.roles %}
-										<form method="post" action="{{ path('add_to_cart', {'productId': data.productId}) }}">
-											<button type="submit">Ajouter au panier</button>
-										</form>
-
-										<button class="add-to-like-button" data-product-id="{{ data.productId }}">
-											<i class="fa fa-heart-o card_heart position-relative top-0 start-0 add-to-like-button" data-product-id="{{ data.productId }}" aria-hidden="true" data-target="#cartModal" data-toggle="modal" data-id="{{ data.productId }}" data-tooltip="J'aime ce produit!"></i>
-										</button>
-									{% endif %}
-								{% endif %}
-							</div>
-							<div class="d-flex flex-column justify-content-around">
-								<h5 id="homeProductName" class="card-title">{{ data.productTitle }}</h5>
-								<div class='d-flex justify-content-between'>
-									<p class="card-text" id="homeProductPrice">
-										{% if data.productPromotion > 0 %}
-											{{ (data.productPrice - (data.productPrice * (data.productPromotion / 100))) | number_format(2) }} €
-										{% else %}
-											{{ data.productPrice | number_format(2) }} €
-										{% endif %}
-									</p>
-									<p class="card-text me-5" id="promotionProductArray">
-										{% if data.productPromotion > 0 %}
-											- {{ (data.productPromotion) }} %
-										{% else %}
-											- 0 %
-										{% endif %}
-									</p>
-								</div>
-							</div>
-							<a href="{{ path('productDescription', { 'id': data.productId }) }}" id="moreInformation" class="btn btn-outline-success infoAccueil">Plus d'informations</a>
-						</div>
-					</div>
-				{% endfor %}
-			</div>
-		</div>
-		{% if app.user is not null %}
-			{% if 'ROLE_ADMIN' in app.user.roles %}
-				<a href="{{ path('product_new') }}">
-					<div class="d-flex justify-content-center border border-secondary rounded" id="addButton">
-						<i class="fa fa-plus" aria-hidden="true" id="plusAdmin"></i>
-						<h2 class="addProduct">Ajouter un produit</h2>
-					</div>
-				</a>
-			{% endif %}
-		{% endif %}
-		<div id="authenticated-status" data-authenticated="{{ isUserConnected }}"></div>
-	</section>
-			<div id="allProductsBlock">
-				<h2 id="allProductsTitle">Tous les produits</h2>
-				<div class="home_modeling">
-					{% for data in myData %}
-						<div id="home_product" data-id="{{ data.productId }}">
-							<img src="{{ asset('assets/img/products/' ~ data.productImage) }}" alt="{{ data.productTitle }}" id="homeAllProductImage" class="card-img-top">
+			{# /// Swiper /// #}
+			<div class="swiper-container" id="product_container">
+				<div class="swiper-wrapper" id="product_list">
+					{% for data in myDataHome %}
+						<div class="card swiper-slide" id="card_product" data-id="{{ data.productId }}">
+							<img src="{{ asset('assets/img/products/' ~ data.productImage) }}" alt="{{ data.productTitle }}" id="homeProductImage" class="card-img-top">
 							<div class="card-body">
 								<div class="d-flex justify-content-around">
 									{% if app.user is not null %}
-										<form method="post" action="{{ path('add_to_cart', {'productId': data.productId}) }}" id="cartHome" class="add-to-cart-button">
-											<button type="submit">Ajouter au panier</button>
-										</form>
+										{% if 'ROLE_ADMIN' in app.user.roles %}
+											<a href="{{ path('delete_form', {'id': data.productId }) }}">
+												<i class="fa fa-minus-square-o minusAdmin" data-id="{{ data.productId }}" aria-hidden="true" data-tooltip="Supprimer un produit"></i>
+											</a>
+											<a href="{{ path('product_edit', { 'id': data.productId }) }}">
+												<i class="fa fa-pencil editAdmin" data-id="{{ data.productId }}" aria-hidden="true" data-tooltip="Modifier un produit"></i>
+											</a>
+										{% endif %}
+									{% endif %}
 
-										<button class="add-to-likes-button" id="heartHome" data-product-id="{{ data.productId }}">
-											<i class="fa fa-heart-o card_heart position-relative top-0 start-0" aria-hidden="true" data-target="#cartModal" data-toggle="modal" data-id="{{ data.productId }}" data-tooltip="Ajouter au Panier"></i>
-										</button>
+									{% if app.user is not null %}
+										{% if 'ROLE_USER' in app.user.roles %}
+											<form method="post" id="addToCartSwiper" action="{{ path('add_to_cart', {'productId': data.productId}) }}">
+												<button type="submit">Ajouter au panier</button>
+											</form>
+
+											<button class="add-to-like-button" data-product-id="{{ data.productId }}">
+												<i class="fa fa-heart-o card_heart position-relative top-0 start-0 add-to-like-button" data-product-id="{{ data.productId }}" aria-hidden="true" data-target="#cartModal" data-toggle="modal" data-id="{{ data.productId }}" data-tooltip="J'aime ce produit!"></i>
+											</button>
+										{% endif %}
 									{% endif %}
 								</div>
 								<div class="d-flex flex-column justify-content-around">
-									<h5 id="homeProductNameProducts" class="card-title">{{ data.productTitle }}</h5>
+									<h5 id="homeProductName" class="card-title">{{ data.productTitle }}</h5>
 									<div class='d-flex justify-content-between'>
 										<p class="card-text" id="homeProductPrice">
 											{% if data.productPromotion > 0 %}
-												{{ (data.productPrice - (data.productPrice * (data.productPromotion / 100))) | number_format(2) }} €
+												{{ (data.productPrice - (data.productPrice * (data.productPromotion / 100))) | number_format(2) }}
+												€
 											{% else %}
-												{{ data.productPrice | number_format(2) }} €
+												{{ data.productPrice | number_format(2) }}
+												€
 											{% endif %}
 										</p>
 										<p class="card-text me-5" id="promotionProductArray">
 											{% if data.productPromotion > 0 %}
-												- {{ (data.productPromotion) }} %
+												-
+												{{ (data.productPromotion) }}
+												%
 											{% else %}
 												- 0 %
 											{% endif %}
@@ -125,39 +80,95 @@
 					{% endfor %}
 				</div>
 			</div>
-			<div id="mostLikedProductsBlock">
-				{% include 'product/mostLikedProducts.html.twig' %}
+			{% if app.user is not null %}
+				{% if 'ROLE_ADMIN' in app.user.roles %}
+					<a href="{{ path('product_new') }}">
+						<div class="d-flex justify-content-center border border-secondary rounded" id="addButton">
+							<i class="fa fa-plus" aria-hidden="true" id="plusAdmin"></i>
+							<h2 class="addProduct">Ajouter un produit</h2>
+						</div>
+					</a>
+				{% endif %}
+			{% endif %}
+			<div id="authenticated-status" data-authenticated="{{ isUserConnected }}"></div>
+
+			{# ///////////////// search bar ////////////////// #}
+
+			<div class="d-flex justify-content-around" id="searchBar_head">
+				{{ form_start(searchForm, {'action': path('search')}) }}
+				{{ form_widget(searchForm) }}
+				<button class="btn btn-outline-success" id="btn_search_head" type="submit">Rechercher</button>
+				{{ form_end(searchForm) }}
+			</div>
+			<div id='searchHomePage'>
+				{% if searchResults %}
+					<h2>Search Results</h2>
+					<ul>
+						{% for product in searchResults %}
+							<li>{{ product.title }}</li>
+						{% endfor %}
+					</ul>
+				{% else %}
+					<p id="searchResult">No results found.</p>
+				{% endif %}
 			</div>
 
-		{# ///////////////// search bar ////////////////// #}
+			{# ///////////////// All Products ////////////////// #}
 
-		{# Render the search form #}
+		</section>
+		<div id="allProductsBlock">
+			<h2 id="allProductsTitle">Tous les produits</h2>
+			<div class="home_modeling">
+				{% for data in myDataHome %}
+					<div id="home_product" data-id="{{ data.productId }}">
+						<img src="{{ asset('assets/img/products/' ~ data.productImage) }}" alt="{{ data.productTitle }}" id="homeAllProductImage" class="card-img-top">
+						<div class="card-body">
+							<div class="d-flex justify-content-around">
+								{% if app.user is not null %}
+									<form method="post" action="{{ path('add_to_cart', {'productId': data.productId}) }}" id="cartHome" class="add-to-cart-button">
+										<button type="submit">Ajouter au panier</button>
+									</form>
 
-		{# <div class="d-flex justify-content-around" id="searchBar_head">
-			{{ form_start(searchForm, {'action': path('search')}) }}
-			{{ form_widget(searchForm) }}
-			<button class="btn btn-outline-success" id="btn_search_head" type="submit">Rechercher</button>
-			{{ form_end(searchForm) }}
+									<button class="add-to-likes-button" id="heartHome" data-product-id="{{ data.productId }}">
+										<i class="fa fa-heart-o card_heart position-relative top-0 start-0" aria-hidden="true" data-target="#cartModal" data-toggle="modal" data-id="{{ data.productId }}" data-tooltip="Ajouter au Panier"></i>
+									</button>
+								{% endif %}
+							</div>
+							<div class="d-flex flex-column justify-content-around">
+								<h5 id="homeProductNameProducts" class="card-title">{{ data.productTitle }}</h5>
+								<div class='d-flex justify-content-between'>
+									<p class="card-text" id="homeProductPrice">
+										{% if data.productPromotion > 0 %}
+											{{ (data.productPrice - (data.productPrice * (data.productPromotion / 100))) | number_format(2) }}
+											€
+										{% else %}
+											{{ data.productPrice | number_format(2) }}
+											€
+										{% endif %}
+									</p>
+									<p class="card-text me-5" id="promotionProductArray">
+										{% if data.productPromotion > 0 %}
+											-
+											{{ (data.productPromotion) }}
+											%
+										{% else %}
+											- 0 %
+										{% endif %}
+									</p>
+								</div>
+							</div>
+							<a href="{{ path('productDescription', { 'id': data.productId }) }}" id="moreInformation" class="btn btn-outline-success infoAccueil">Plus d'informations</a>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div id="mostLikedProductsBlock">
+			{% include 'product/mostLikedProducts.html.twig' %}
 		</div>
 
-		<div> #}
-
-		{# Display search results if available    marche si tout le reste est commenté#}
-
-		{# {% if searchResults %}
-			<h2>Search Results</h2>
-			<ul>
-				{% for product in searchResults %}
-					<li>{{ product.title }}</li>
-				{% endfor %}
-			</ul>
-		{% else %}
-			<p>No results found.</p>
-		{% endif %}
+		{# <div id="productsWithPromotionBlock">
+			{% include 'product/productsWithPromotion.html.twig' %}
 		</div> #}
-
-			{# <div id="productsWithPromotionBlock">
-				{% include 'product/productsWithPromotion.html.twig' %}
-			</div> #}
 	</main>
 {% endblock %}
