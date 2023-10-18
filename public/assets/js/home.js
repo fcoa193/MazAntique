@@ -4,9 +4,6 @@ if (currentPage === "homePage") {
   var swiper = new Swiper(".swiper-container", {
     effect: "coverflow",
     grabCursor: true,
-    // width: "100%",
-    slidesPerView: 4,
-    spaceBetween: 20,
     centeredSlides: true,
     coverflowEffect: {
       rotate: 1,
@@ -25,6 +22,26 @@ if (currentPage === "homePage") {
     },
   });
 
+  function setSlidesPerView() {
+    var screenWidth = window.innerWidth;
+
+    if (screenWidth >= 1000) {
+      swiper.params.slidesPerView = 4;
+    } else if (screenWidth >= 768) {
+      swiper.params.slidesPerView = 3;
+    } else if (screenWidth >= 300) {
+      swiper.params.slidesPerView = 2;
+    } else{
+      swiper.params.slidesPerView = 1;
+    }
+
+    swiper.update();
+  }
+
+  setSlidesPerView();
+
+  window.addEventListener("resize", setSlidesPerView);
+
   slideChange.call(swiper);
 
   function slideChange() {
@@ -32,17 +49,17 @@ if (currentPage === "homePage") {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const heartIcons = document.querySelectorAll(".card_heart");
-  const cartModal = new bootstrap.Modal(document.getElementById("cartModal"));
+  const likeButtons = document.querySelectorAll(".add-to-like-button");
 
-  heartIcons.forEach((heartIcon) => {
-    heartIcon.addEventListener("click", function (event) {
+  likeButtons.forEach((button) => {
+    const heartIcon = button.querySelector(".card_heart");
+    
+    button.addEventListener("click", function (event) {
       event.preventDefault();
-      
+
       if (!heartIcon.classList.contains("clicked")) {
         heartIcon.classList.add("clicked");
         heartIcon.setAttribute("data-tooltip", "Je n'aime plus ce produit.");
-        
 
         const productId = heartIcon.getAttribute("data-product-id");
         fetch(`/like_product/${productId}`, {
@@ -61,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         heartIcon.classList.remove("clicked");
         heartIcon.setAttribute("data-tooltip", "J'aime ce produit!");
-        
+
         const productId = heartIcon.getAttribute("data-product-id");
         fetch(`/unlike_product/${productId}`, {
           method: 'POST',
@@ -80,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
 
 
 //   document.addEventListener('DOMContentLoaded', function () {

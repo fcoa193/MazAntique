@@ -22,28 +22,27 @@
 			<div class='allBody'>
 				<div class="d-flex">
 					<div class="d-flex flex-column">
-
 						<div class="bloc_panier">
 							<h1>Récapitulatif de commande</h1>
-
 							<table>
 								<thead id='theadCart'>
 									<tr id="trCart">
-										<th>Nom du produit</th>
-										<th id='thCartPrice'>Prix</th>
-										<th>Promotion</th>
-										<th>Quantité</th>
-										<th>Sous-total</th>
-										<th>Retirer du panier</th>
+										<th class='lengthCart'>Nom du produit</th>
+										<th class='lengthCart' id='thCartPrice'>Prix</th>
+										<th class='lengthCart' id='thPromotionCart'>Promotion</th>
+										<th class='lengthCart' id='thQuantityCart'>Quantité</th>
+										<th class='lengthCart' >Sous-total</th>
+										<th class='lengthCart' >Retirer du panier</th>
 									</tr>
 								</thead>
 								<tbody>
 									{% set totalPrice = 0 %}
 									{% for index, cartItem in cartItems %}
 										<tr id="barCart">
-											<td class="cartTd">{{ cartItem.cartProduct }}</td>
-											<td class="cartTd">
-												<div class="d-flex flex-column justify-content-around">
+											<td class='lengthCart'>{{ cartItem.cartProduct }}</td>
+											<td class='lengthCart'>
+												<div class="cartTd d-flex flex-column justify-content-around">
+
 													<p class="card-text" id="homeProductPrice">
 														{% if cartItem.cartPromotion > 0 %}
 															{{ (cartItem.cartPrice - (cartItem.cartPrice * (cartItem.cartPromotion / 100))) | number_format(2) }}€
@@ -53,9 +52,9 @@
 													</p>
 												</div>
 											</td>
-											<td class="cartTd d-flex ">-{{ cartItem.cartPromotion }}%</td>
-											<td class="cartTd"><input type="number" value="{{ cartItem.cartQuantity }}"></td>
-											<td class="cartTd">
+											<td class='lengthCart d-flex' id='promotion_cart'>-{{ cartItem.cartPromotion }}%</td>
+											<td class='lengthCart' id='quantity_cart'><input type="number" value="{{ cartItem.cartQuantity }}"></td>
+											<td class='lengthCart'>
 												{% if cartItem.cartPromotion > 0 %}
 													{% set subTotal = (cartItem.cartPrice - (cartItem.cartPrice * (cartItem.cartPromotion / 100))) * cartItem.cartQuantity %}
 													{{ subTotal }}€

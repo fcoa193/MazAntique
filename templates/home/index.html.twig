@@ -34,7 +34,7 @@
 												<i class="fa fa-minus-square-o minusAdmin" data-id="{{ data.productId }}" aria-hidden="true" data-tooltip="Supprimer un produit"></i>
 											</a>
 											<a href="{{ path('product_edit', { 'id': data.productId }) }}">
-												<i class="fa fa-pencil editAdmin" data-id="{{ data.productId }}" aria-hidden="true" data-tooltip="Modifier un produit"></i>
+												<i class="fa fa-pencil editAdmin" data-id="{{ data.productId }}" id='pencilHome' aria-hidden="true" data-tooltip="Modifier un produit"></i>
 											</a>
 										{% endif %}
 									{% endif %}
@@ -94,7 +94,7 @@
 
 			{# ///////////////// search bar ////////////////// #}
 
-			<div class="d-flex justify-content-around" id="searchBar_head">
+			<div class="d-flex justify-content-around" id="searchBar_body">
 				{{ form_start(searchForm, {'action': path('search')}) }}
 				{{ form_widget(searchForm) }}
 				<button class="btn btn-outline-success" id="btn_search_head" type="submit">Rechercher</button>

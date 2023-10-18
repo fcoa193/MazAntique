@@ -1,14 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Product
+{% block title %}Nouveau produit
 {% endblock %}
 
 {% block body %}
-	<a id="previous-page-btn" href="/">
-		<i class="bi bi-arrow-left"></i>
-	</a>
+	{# Flash #}
+	<div class="flashTop">
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }}">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
+	</div>
 
-	<h1 class="admin_black" id="admin_display_mid">Créer un nouveau produit</h1>
+	<h1 class="d-flex justify-content-center" id="admin_display_mid">Créer un nouveau produit</h1>
 
 	{{ include('product/_form.html.twig') }}
 

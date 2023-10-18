@@ -118,7 +118,7 @@ class HomeController extends AbstractController
         ]);
     }
     
-    #[Route('/most_liked_products', name: 'most_liked_products', methods: ['GET'])]
+    #[Route('/most_liked_products', name: 'most_liked_products', methods: ['POST'])]
     public function mostLikedProducts(EntityManagerInterface $entityManager): array
     {
         $query = $entityManager->createQueryBuilder()
@@ -151,7 +151,7 @@ class HomeController extends AbstractController
         return $productDataArray;
     }
     
-    #[Route('/products_with_promotion', name: 'products_with_promotion', methods: ['GET'])]
+    #[Route('/products_with_promotion', name: 'products_with_promotion', methods: ['POST'])]
     public function productsWithPromotion(EntityManagerInterface $entityManager): array
     {
         $query = $entityManager->createQueryBuilder()

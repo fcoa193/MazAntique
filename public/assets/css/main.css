@@ -18,7 +18,7 @@
   display: flex;
   justify-content: center;
 }
-#searchBar_head{
+#searchBar_head, #searchBar_body{
   height: 3%;
 }
 #searchField_head{
@@ -64,6 +64,20 @@ header {
 #icon_cart{
   font-size: larger;
 }
+
+/* /// Responsive /// */
+@media only screen and (max-width: 990px) {
+  #searchBar_head{
+    display: none !important;
+  }
+ #popul_header{
+  display: none;
+ }
+ #top_header{
+  margin-top: 5%;
+ }
+}
+
 /* /// Footer /// */
 
 #backgroundFooter{
@@ -84,6 +98,11 @@ header {
 #footerMarque{
   margin: 150px auto 0px auto;
 } 
+
+/* /// Responsive /// */
+
+
+
 /* /// Log in and Register /// */
 .row {
     display: flex;
@@ -173,13 +192,19 @@ main{
   outline: none;
 }
 
+/* /// Responsive /// */
+
+
+
+
+
 /* /// Home page /// */
 
-.allBody, #adminUsers, .login{
+#adminUsers, .login{
   padding-top: 15% !important;
 }
 .flashTop{
-  padding-top: 15%;
+  padding-top: 180px;
 }
 button {
 	background: none;
@@ -190,6 +215,13 @@ button {
 	cursor: pointer;
 	outline: inherit;
 }
+
+/* /// Responsive /// */
+
+
+
+
+
 /* swiper */
 #product_list{
   display: flex;
@@ -331,7 +363,7 @@ height: 100% !important;
   flex-wrap: wrap !important;
 }
 #home_product{
-  width: 20% !important;
+  width: 295px !important;
   margin: 4% 2% !important;
   padding-bottom: 1%;
   border: #d8d8d8 2px solid;
@@ -340,6 +372,40 @@ height: 100% !important;
 }
 #allProductsTitle{
   font-size: 2em !important;
+}
+
+/* /// Responsive /// */
+
+@media only screen and (max-width: 800px) {
+  .home_modeling{
+    margin-left: 20%;
+  } 
+}
+
+
+@media only screen and (max-width: 855px) {
+  #product_container{
+    padding-bottom: 100px !important;
+  }
+  #home_product{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  } 
+}
+
+@media only screen and (max-width: 600px) {
+  #product_container{
+    padding-bottom: 550px !important;
+  }
+  
+}
+
+@media only screen and (max-width: 575px) {
+    #product_container{
+    padding-bottom: 650px !important;
+  }
+    
 }
 /* /// Description Page /// */
 
@@ -350,7 +416,14 @@ height: 100% !important;
   margin: 200px auto auto auto;
 }
 
+/* /// Responsive /// */
+
+
+
+
+
 /* /// Contact Page /// */
+
 #contact_btn{
   position: relative;
   left: 50%;
@@ -369,6 +442,12 @@ height: 100% !important;
   cursor: pointer;
   transition: 500ms;
 }
+/* /// Responsive /// */
+
+
+
+
+
 
 /* /// Profile /// */
 #profileDisconnected{
@@ -377,39 +456,59 @@ height: 100% !important;
   justify-content: center;
   padding-top: 8em;
 }
+/* /// Responsive /// */
+
+
+
+
 
 /* /// Cart /// */
 
 .bloc_panier{
-  border: 1px solid #b5b5b5;
-  padding: 10%;
+  width: 80vw;
+  padding: 5%;
 }
+
 #trCart{
   border-bottom: 2px solid #b5b5b5;
 }
-#thCartPrice{
-  position: relative;
-  left: 6%;
-}
 
+/* /// Responsive /// */
+
+@media only screen and (max-width: 700px) {
+  #promotion_cart{
+    display: none !important;
+  }
+  #thPromotionCart{
+    display: none;
+  }
+  #quantity_cart{
+    display: none;
+  }
+  #thQuantityCart{
+    display: none;
+  }
+}
 /* /// Forms /// */
 .form_title{
   color: #059eaf;
 }
-.cartTd{
-  padding: 20px 50px;
+.lengthCart{
+  width: 20%;
+  padding: 2%;
 }
+
 #barCart{
   border-bottom: #048B9A solid 2px !important;
   width: 100% !important;
 }
 .formGroup{
-  margin: 8%;
-  width: 200%;
+  margin: 8% 0%;
+  width: 40vw;
   border-bottom: #048B9A solid 2px !important;
 }
 #productfForm{
-  margin-top: 200px;
+  margin-top: 15%;
 }
 .updateBtnForm{
   background-color: #048B9A;
@@ -423,6 +522,10 @@ height: 100% !important;
 .updateBtnForm:hover{
   background-color: #036F7D;
 }
+/* /// Responsive /// */
+
+
+
 
 /* /// Amin Users /// */
 
@@ -442,3 +545,7 @@ height: 100% !important;
   align-items: center;
   justify-content: center;
 }
+/* /// Responsive /// */
+
+
+

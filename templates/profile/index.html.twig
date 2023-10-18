@@ -4,10 +4,22 @@
 
 {% block body %}
 
+	{# Flash #}
+	<div class="flashTop">
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }}">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
+	</div>
+
 	{% if app.user is null %}
         <h2 class='allBody' id="profileDisconnected">Velliez vous connecter pour avoir accès à votre profil.</h2>
 	{% else %}
         <div class='allBody'>
+            <h1 class="d-flex justify-content-center"> Page Profil</h1>
             <div class="form-group">
                 <div class="row">
                     <label for="lname">Nom:</label><br>

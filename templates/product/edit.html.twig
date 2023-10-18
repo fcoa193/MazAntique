@@ -3,6 +3,17 @@
 {% block title %}Edit Product{% endblock %}
 
 {% block body %}
+	{# Flash #}
+	<div class="flashTop">
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }}">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
+	</div>
+    
     <h1 id="admin_display_mid" class="form_title d-flex justify-content-center">Modifier un produit</h1> 
     <div class="d-flex justify-content-center">
 {{ form_start(form) }}
