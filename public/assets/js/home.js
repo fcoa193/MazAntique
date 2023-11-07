@@ -49,19 +49,28 @@ if (currentPage === "homePage") {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Select all elements with the class "add-to-like-button"
   const likeButtons = document.querySelectorAll(".add-to-like-button");
 
+  // Loop through each "add-to-like-button" element
   likeButtons.forEach((button) => {
+    // Find the heart icon within the button
     const heartIcon = button.querySelector(".card_heart");
     
+    // Add a click event listener to the button
     button.addEventListener("click", function (event) {
       event.preventDefault();
 
+      // Check if the heart icon is currently clicked (liked)
       if (!heartIcon.classList.contains("clicked")) {
+        // If not liked, add the "clicked" class and change the tooltip
         heartIcon.classList.add("clicked");
         heartIcon.setAttribute("data-tooltip", "Je n'aime plus ce produit.");
 
+        // Get the product ID from the data attribute
         const productId = heartIcon.getAttribute("data-product-id");
+
+        // Send a POST request to like the product
         fetch(`/like_product/${productId}`, {
           method: 'POST',
         })
@@ -76,10 +85,14 @@ document.addEventListener("DOMContentLoaded", function () {
           console.error('An error occurred:', error);
         });
       } else {
+        // If already liked, remove the "clicked" class and change the tooltip
         heartIcon.classList.remove("clicked");
         heartIcon.setAttribute("data-tooltip", "J'aime ce produit!");
 
+        // Get the product ID from the data attribute
         const productId = heartIcon.getAttribute("data-product-id");
+
+        // Send a POST request to unlike the product
         fetch(`/unlike_product/${productId}`, {
           method: 'POST',
         })
@@ -100,34 +113,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-//   document.addEventListener('DOMContentLoaded', function () {
-//     const filterButtons = document.querySelectorAll('.filter-button');
-//     const productList = document.querySelector('.product-list');
-
-//     filterButtons.forEach(function (button) {
-//         button.addEventListener('click', function () {
-//             const criteria = button.getAttribute('data-criteria');
-//             filterProducts(criteria);
-//         });
-//     });
-
-//     function filterProducts(criteria) {
-//         fetch(`/filter-products/${criteria}`, {
-//             method: 'GET',
-//         })
-//         .then(response => response.json())
-//         .then(data => {
-//             productList.innerHTML = '';
-
-//             data.forEach(product => {
-//                 const productItem = document.createElement('li');
-//                 productItem.textContent = product.productTitle;
-//                 productList.appendChild(productItem);
-//             });
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-//     }
-//   });
-// });

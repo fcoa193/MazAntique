@@ -146,7 +146,7 @@ input{
   margin-top: 6%;
 }
 main{
-  padding-bottom: 30vw;
+  padding-bottom: 5vw;
 }
 .little_border{
   margin-left: 10px;
@@ -199,7 +199,20 @@ main{
 
 
 /* /// Home page /// */
-
+#addToCartButtonMain{
+  color:#048B9A !important;
+}
+#addToCartButtonMain:hover{
+  scale: 1.20;
+}
+.addToCartButtonMain{
+  color:#048B9A !important;
+  position: relative;
+  right: 85%;
+}
+.addToCartButtonMain:hover{
+  scale: 1.20;
+}
 #adminUsers, .login{
   padding-top: 15% !important;
 }
@@ -215,13 +228,6 @@ button {
 	cursor: pointer;
 	outline: inherit;
 }
-
-/* /// Responsive /// */
-
-
-
-
-
 /* swiper */
 #product_list{
   display: flex;
@@ -373,13 +379,32 @@ height: 100% !important;
 #allProductsTitle{
   font-size: 2em !important;
 }
-
+#linkHome{
+  text-decoration: none;
+}
+#addProduct{
+  color: #048B9A;
+  font-size: larger;
+  width: 30%;
+  margin: 4% auto;
+  border: none;
+}
+#addProduct:hover{
+  color: white;
+  background-color: #048B9A;
+}
 /* /// Responsive /// */
-
+@media only screen and (max-width: 1280px) {
+  .addToCartButtonMain{
+    position: relative;
+    right: auto;
+  }
+}
 @media only screen and (max-width: 800px) {
   .home_modeling{
     margin-left: 20%;
   } 
+
 }
 
 
@@ -407,6 +432,7 @@ height: 100% !important;
   }
     
 }
+
 /* /// Description Page /// */
 
 .bloc_description{
@@ -458,21 +484,27 @@ height: 100% !important;
 }
 /* /// Responsive /// */
 
-
-
-
-
 /* /// Cart /// */
 
 .bloc_panier{
   width: 80vw;
   padding: 5%;
 }
-
 #trCart{
   border-bottom: 2px solid #b5b5b5;
 }
-
+#thRemoveCart{
+  position: relative;
+  right: 4%;
+}
+#commandePanier{
+  color: #048B9A;
+  font-size: larger;
+}
+#commandePanier:hover{
+  color: white;
+  background-color: #048B9A;
+}
 /* /// Responsive /// */
 
 @media only screen and (max-width: 700px) {

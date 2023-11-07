@@ -19,7 +19,6 @@
 	<main>
 		<section
 			id="homePage">
-
 			{# /// Swiper /// #}
 			<div class="swiper-container" id="product_container">
 				<div class="swiper-wrapper" id="product_list">
@@ -42,7 +41,7 @@
 									{% if app.user is not null %}
 										{% if 'ROLE_USER' in app.user.roles %}
 											<form method="post" id="addToCartSwiper" action="{{ path('add_to_cart', {'productId': data.productId}) }}">
-												<button type="submit">Ajouter au panier</button>
+												<button type="submit" class="addToCartButtonMain">Ajouter au panier</button>
 											</form>
 
 											<button class="add-to-like-button" data-product-id="{{ data.productId }}">
@@ -82,10 +81,10 @@
 			</div>
 			{% if app.user is not null %}
 				{% if 'ROLE_ADMIN' in app.user.roles %}
-					<a href="{{ path('product_new') }}">
-						<div class="d-flex justify-content-center border border-secondary rounded" id="addButton">
+					<a id="linkHome" href="{{ path('product_new') }}">
+						<div class="d-flex justify-content-center btn btn-outline-success" id='addProduct'>
 							<i class="fa fa-plus" aria-hidden="true" id="plusAdmin"></i>
-							<h2 class="addProduct">Ajouter un produit</h2>
+							<h2>Ajouter un produit</h2>
 						</div>
 					</a>
 				{% endif %}
@@ -126,11 +125,11 @@
 							<div class="d-flex justify-content-around">
 								{% if app.user is not null %}
 									<form method="post" action="{{ path('add_to_cart', {'productId': data.productId}) }}" id="cartHome" class="add-to-cart-button">
-										<button type="submit">Ajouter au panier</button>
+										<button type="submit" id="addToCartButtonMain">Ajouter au panier</button>
 									</form>
 
-									<button class="add-to-likes-button" id="heartHome" data-product-id="{{ data.productId }}">
-										<i class="fa fa-heart-o card_heart position-relative top-0 start-0" aria-hidden="true" data-target="#cartModal" data-toggle="modal" data-id="{{ data.productId }}" data-tooltip="Ajouter au Panier"></i>
+									<button class="add-to-like-button" data-product-id="{{ data.productId }}">
+										<i class="fa fa-heart-o card_heart position-relative top-0 start-0 add-to-like-button" data-product-id="{{ data.productId }}" aria-hidden="true" data-target="#cartModal" data-toggle="modal" data-id="{{ data.productId }}" data-tooltip="J'aime ce produit!"></i>
 									</button>
 								{% endif %}
 							</div>

@@ -32,7 +32,7 @@
 										<th class='lengthCart' id='thPromotionCart'>Promotion</th>
 										<th class='lengthCart' id='thQuantityCart'>Quantité</th>
 										<th class='lengthCart' >Sous-total</th>
-										<th class='lengthCart' >Retirer du panier</th>
+										<th class='lengthCart' id='thRemoveCart'>Retirer du panier</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -80,7 +80,7 @@
 								{{ totalPrice }}
 								€</h4>
 
-							<a href="{{ path('checkout') }}">Passer la commande</a>
+							<a href="{{ path('checkout') }}" class="btn btn-outline-success" id="commandePanier"> Passer la commande</a>
 						</div>
 					</div>
 				</div>

@@ -3,61 +3,62 @@
 {% block title %}Contact{% endblock %}
 
 {% block body %}
-
-	{# Flash #}
-	<div class="flashTop">
-		{% for label, messages in app.flashes %}
-			{% for message in messages %}
-				<div class="alert alert-{{ label }}">
-					{{ message }}
-				</div>
-			{% endfor %}
-		{% endfor %}
-	</div>
-
-	{% if app.user is null %}
-        <h2 class='allBody' id="profileDisconnected">Velliez vous connecter pour avoir accès à votre profil.</h2>
-	{% else %}
-        <div class='allBody'>
-            <h1 class="d-flex justify-content-center"> Page Profil</h1>
-            <div class="form-group">
-                <div class="row">
-                    <label for="lname">Nom:</label><br>
-                    <input type="text" id="lname" value="{{ app.user.getLastName() }}" class="form-control" name="lname" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="row">
-                    <label for="fname">Prénom:</label><br>
-                    <input type="text" id="fname" value="{{ app.user.getFirstName() }}" class="form-control" name="fname" required><br>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="row">
-                    <label for="email">Email:</label><br>
-                    <input type="email" value="{{ app.user.getEmail() }}" name="email" id="inputEmail" class="form-control" placeholder="Adresse mail" autocomplete="email" required autofocus>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="row">
-                    <label for="password">Ancien mot de passe:</label><br>
-                    <input type="text" placeholder="Ancien mot de passe" name="new_password" id="inputPassword" class="form-control" autocomplete="new-password">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="row">
-                    <label for="password">Nouveau mot de passe:</label><br>
-                    <input type="password" placeholder="Nouveau mot de passe" name="new_password" id="inputPassword" class="form-control" autocomplete="new-password">
-                </div>
-            </div>
-
-            <a href="{{ path('profile_edit') }}">
-            <i class="fa fa-pencil editAdmin" aria-hidden="true" data-tooltip="Modifier son profil"></i>
-            Modifier vos informations personnelles</a>
+    <main>
+        {# Flash #}
+        <div class="flashTop">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
         </div>
-    {% endif %}
+
+        {% if app.user is null %}
+            <h2 class='allBody' id="profileDisconnected">Velliez vous connecter pour avoir accès à votre profil.</h2>
+        {% else %}
+            <div class='allBody'>
+                <h1 class="d-flex justify-content-center"> Page Profil</h1>
+                <div class="form-group">
+                    <div class="row">
+                        <label for="lname">Nom:</label><br>
+                        <input type="text" id="lname" value="{{ app.user.getLastName() }}" class="form-control" name="lname" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <label for="fname">Prénom:</label><br>
+                        <input type="text" id="fname" value="{{ app.user.getFirstName() }}" class="form-control" name="fname" required><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <label for="email">Email:</label><br>
+                        <input type="email" value="{{ app.user.getEmail() }}" name="email" id="inputEmail" class="form-control" placeholder="Adresse mail" autocomplete="email" required autofocus>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <label for="password">Ancien mot de passe:</label><br>
+                        <input type="text" placeholder="Ancien mot de passe" name="new_password" id="inputPassword" class="form-control" autocomplete="new-password">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <label for="password">Nouveau mot de passe:</label><br>
+                        <input type="password" placeholder="Nouveau mot de passe" name="new_password" id="inputPassword" class="form-control" autocomplete="new-password">
+                    </div>
+                </div>
+
+                <a href="{{ path('profile_edit') }}">
+                <i class="fa fa-pencil editAdmin" aria-hidden="true" data-tooltip="Modifier son profil"></i>
+                Modifier vos informations personnelles</a>
+            </div>
+        {% endif %}
+    </main>
 {% endblock %}

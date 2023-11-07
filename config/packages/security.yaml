@@ -11,6 +11,9 @@ security:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
     main:
+      form_login:
+        login_path: login
+        check_path: login
       logout:
         path: logout
         target: /    
@@ -20,6 +23,10 @@ security:
       entry_point: 'App\Security\UserAuthenticator'
   access_control:
     - { path: ^/user, roles: IS_AUTHENTICATED }
+    - { path: ^/admin, roles: ROLE_ADMIN }
+    - { path: ^/user, roles: ROLE_USER }
+  role_hierarchy:
+      ROLE_ADMIN: [ROLE_USER]
 when@test:
   security:
     password_hashers:
