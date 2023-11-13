@@ -40,6 +40,10 @@ adminUsers:
   path: "/admin_users"
   controller: App\Controller\UserController::listUsers
 
+adminDeleteUsers:
+  path: "/admin_delete_users"
+  controller: App\Controller\UserController::deleteUser
+
 paypall_get_access_token:
     path: '/get-access-token'
     controller: App\Controller\PayPallController::getAccessToken'

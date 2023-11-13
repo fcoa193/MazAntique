@@ -31,9 +31,8 @@ class Product
     #[ORM\Column(length: 255)]
     private ?int $promotion;
 
-    #[ORM\ManyToMany(targetEntity: Cart::class, mappedBy: "product")]
-    private $cart;    
-
+    #[ORM\OneToMany(targetEntity: Cart::class, mappedBy: "product")]
+    private $cart;
 
 
     #[ORM\OneToMany(targetEntity: Liked::class, mappedBy: "product")]

@@ -3,14 +3,27 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
+
     {% if app.user %}
         <div class="mb-3">
             {{ app.user.userIdentifier }},
             <a href="{{ path('logout') }}">Logout</a>
         </div>
     {% endif %}
+  <main id="loginPad">
+
+              {# Flash #}
+            <div class="flashTopLogin">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
     <div class="backgroundImage">
-      <main class="login">
         <section class="login_container">
           <div id="title_login">
             <h2>CONNEXION</h2>
@@ -41,6 +54,6 @@
             </form>
           </div>
         </section>
-      </main>
     </div>
+  </main>
 {% endblock %}

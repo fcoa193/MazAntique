@@ -107,7 +107,7 @@ class HomeController extends AbstractController
              ];
         }
 
-        return $this->render('home/index.html.twig', [
+        return $this->render('product/search.html.twig', [
             'myDataHome' => $myDataHome,
             'isUserConnected' => $isUserConnected,
             'roleUser' => $roleUser,

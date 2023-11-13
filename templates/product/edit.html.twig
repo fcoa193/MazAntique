@@ -1,43 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Product{% endblock %}
+{% block title %}Modifier un produit{% endblock %}
 
 {% block body %}
-	{# Flash #}
-	<div class="flashTop">
-		{% for label, messages in app.flashes %}
-			{% for message in messages %}
-				<div class="alert alert-{{ label }}">
-					{{ message }}
-				</div>
-			{% endfor %}
-		{% endfor %}
-	</div>
-    
-    <h1 id="admin_display_mid" class="form_title d-flex justify-content-center">Modifier un produit</h1> 
-    <div class="d-flex justify-content-center">
-{{ form_start(form) }}
-    <div class="formGroup" id="productfForm">
-        {{ form_label(form.title) }}
-        {{ form_widget(form.title) }}
-    </div>
-    <div class="formGroup">
-        {{ form_label(form.image) }}
-        {{ form_widget(form.image) }}
-    </div>
-    <div class="formGroup">
-        {{ form_label(form.description) }}
-        {{ form_widget(form.description) }}
-    </div>
-    <div class="formGroup">
-        {{ form_label(form.price) }}
-        {{ form_widget(form.price) }}
-    </div>
-    <div class="formGroup">
-        {{ form_label(form.promotion) }}
-        {{ form_widget(form.promotion) }}
-    </div>
-        <button class="updateBtnForm">{{ button_label|default('Update') }}</button>
-        {{ form_end(form) }}
+    <div class="backgroundImage">
+        <main>
+            {# Flash #}
+            <div class="flashTop">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            
+            <h1 id="admin_display_mid" class="form_title d-flex justify-content-center">Modifier un produit</h1> 
+            <div class="d-flex justify-content-center">
+        {{ form_start(form) }}
+            <div class="formGroup" id="productfForm">
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title) }}
+            </div>
+            <div class="formGroup">
+                {{ form_label(form.image) }}
+                {{ form_widget(form.image) }}
+            </div>
+            <div class="formGroup">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+            <div class="formGroup">
+                {{ form_label(form.price) }}
+                {{ form_widget(form.price) }}
+            </div>
+            <div class="formGroup">
+                {{ form_label(form.promotion) }}
+                {{ form_widget(form.promotion) }}
+            </div>
+                <button class="updateBtnForm">{{ button_label|default('Update') }}</button>
+                {{ form_end(form) }}
+            </div>
+        </main>
     </div>
 {% endblock %}

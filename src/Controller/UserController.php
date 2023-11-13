@@ -44,7 +44,6 @@ class UserController extends AbstractController
     }
 
     #[Route('/profile/edit', name: 'profile_edit', methods: ['GET', 'POST'])]
-    #[IsGranted("ROLE_USER")]
     public function editProfile(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -79,5 +78,14 @@ class UserController extends AbstractController
         return $this->render('home/adminUsers.html.twig', [
             'users' => $users,
         ]);
+    }
+
+    #[Route('/home/adminUsers', name: 'admin_delete_users')]
+    public function deleteUser(User $user, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('user_list');
     }
 }

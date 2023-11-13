@@ -133,15 +133,18 @@ class CartController extends AbstractController
             return $this->json(['success' => false, 'message' => 'Unauthorized.'], 403);
         }
     
-        if ($cartItem->getQuantity() > 1) {
+        if ($cartItem->getQuantity() > 0) {
             $cartItem->setQuantity($cartItem->getQuantity() - 1);
         } else {
+            // If quantity reaches 0, remove the cart item
             $entityManager->remove($cartItem);
         }
     
         $entityManager->flush();
+    
         $this->addFlash('success', 'Produit retiré du panier.');
     
         return $this->redirectToRoute('panier');
-    }    
+    }
+    
 }

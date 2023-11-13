@@ -6,11 +6,11 @@
 
 
 services:
-    App\Service\PayPalPaymentService:
-        public: true
+    # App\Service\PayPalPaymentService:
+    #     public: true
 
-    App\Service\PayPalPaymentFactory:
-        public: true
+    # App\Service\PayPalPaymentFactory:
+    #     public: true
         
     App\Repository\ProductRepository: ~
     _defaults:

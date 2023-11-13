@@ -16,5 +16,6 @@ class SearchService
     public function searchProducts($searchQuery)
     {
         return $this->productRepository->findByTitle($searchQuery);
+        //  Ajouter image
     }
 }

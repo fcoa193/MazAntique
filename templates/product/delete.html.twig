@@ -1,8 +1,11 @@
-<h2>Delete Product</h2>
 
-<p>Are you sure you want to delete the product?</p>
+    <div class="backgroundImage">
+        <h2>Supprimer un produit</h2>
 
-<form method="POST" action="{{ path('product_delete', {'id': app.request.get('id') }) }}">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.request.get('id')) }}">
-    <button type="submit">Delete</button>
-</form>
+        <p>Voulez vous vraiment suprimmer le produit?</p>
+
+        <form method="POST" action="{{ path('product_delete', {'id': app.request.get('id') }) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.request.get('id')) }}">
+            <button type="submit">Supprimer</button>
+        </form>
+    </div>

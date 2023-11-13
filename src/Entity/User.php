@@ -36,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\OneToMany(targetEntity: Cart::class, mappedBy:"user")]
+    #[ORM\OneToMany(targetEntity: Cart::class, mappedBy: "user", cascade: ["remove"])]
     private $carts;
 
     public function __construct()

@@ -1,16 +1,16 @@
 <?php
-// namespace App\Controller;
+namespace App\Controller;
 
-// use App\Service\PayPalPaymentService;
-// use Symfony\Component\HttpClient\HttpClient;
-// use Symfony\Component\HttpFoundation\JsonResponse;
-// use Symfony\Component\Routing\Annotation\Route;
-// use Symfony\Component\HttpFoundation\Request;
-// use Symfony\Component\HttpKernel\Exception\HttpException;
-// use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\PayPalPaymentService;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-// class PayPalController extends AbstractController
-// {
+class PayPalController extends AbstractController
+{
 //     private $paypalPaymentService;
 
 //     public function __construct(PayPalPaymentService $paypalPaymentService)
@@ -60,4 +60,4 @@
 //         // Redirect the user to the PayPal approval URL
 //         return $this->redirect($approvalUrl);
 //     }
-// }
+}

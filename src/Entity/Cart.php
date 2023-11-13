@@ -21,9 +21,8 @@ class Cart
     #[ORM\JoinColumn(nullable: false)]
     private $product;
 
-    #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private $user;    
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "carts", cascade: ["persist"])]
+    private $user;
 
     #[ORM\Column(type: 'integer')]
     private $quantity;  
@@ -31,7 +30,7 @@ class Cart
     #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: "Cart")]
     private $cart;   
 
-    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: "Cart")]
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: "Cart", cascade: ["remove"])]
     #[ORM\JoinColumn(nullable: false)]
     private $products;
 

@@ -4,19 +4,22 @@
 {% endblock %}
 
 {% block body %}
-	{# Flash #}
-	<div class="flashTop">
-		{% for label, messages in app.flashes %}
-			{% for message in messages %}
-				<div class="alert alert-{{ label }}">
-					{{ message }}
-				</div>
-			{% endfor %}
-		{% endfor %}
+    <div class="backgroundImage">
+		<main>
+			{# Flash #}
+			<div class="flashTop">
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						<div class="alert alert-{{ label }}">
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+			</div>
+
+			<h1 class="d-flex justify-content-center" id="admin_display_mid">Créer un nouveau produit</h1>
+
+			{{ include('product/_form.html.twig') }}
+		</main>
 	</div>
-
-	<h1 class="d-flex justify-content-center" id="admin_display_mid">Créer un nouveau produit</h1>
-
-	{{ include('product/_form.html.twig') }}
-
 {% endblock %}

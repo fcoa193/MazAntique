@@ -36,8 +36,10 @@
 									</tr>
 								</thead>
 								<tbody>
+
 									{% set totalPrice = 0 %}
 									{% for index, cartItem in cartItems %}
+									
 										<tr id="barCart">
 											<td class='lengthCart'>{{ cartItem.cartProduct }}</td>
 											<td class='lengthCart'>
@@ -53,7 +55,7 @@
 												</div>
 											</td>
 											<td class='lengthCart d-flex' id='promotion_cart'>-{{ cartItem.cartPromotion }}%</td>
-											<td class='lengthCart' id='quantity_cart'><input type="number" value="{{ cartItem.cartQuantity }}"></td>
+											<td class='lengthCart' id='quantity_cart'><input value="{{ cartItem.cartQuantity }}"></td>
 											<td class='lengthCart'>
 												{% if cartItem.cartPromotion > 0 %}
 													{% set subTotal = (cartItem.cartPrice - (cartItem.cartPrice * (cartItem.cartPromotion / 100))) * cartItem.cartQuantity %}
@@ -76,7 +78,7 @@
 									{% endfor %}
 								</tbody>
 							</table>
-							<h4>Prix total:
+							<h4 id="totalPriceCart">Prix total:
 								{{ totalPrice }}
 								€</h4>
 
