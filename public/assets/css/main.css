@@ -41,6 +41,11 @@
 .low_header{
   color: #b5b5b5;
 }
+#popul_header{
+  width: 150px;
+  position: relative;
+  top: 10px;
+}
 .nav_head{
   height: 25px;
   margin-left: 10% !important;
@@ -81,6 +86,11 @@ header {
 }
 
 /* /// Footer /// */
+footer{
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
 
 #backgroundFooter{
   height: 200px !important;
@@ -188,9 +198,8 @@ input{
 #login_btn:focus {
   outline: none;
 }
-#inscription{
-}
-#loginPad{
+.allBody{
+  min-height: 100vh;
 }
 main{
   padding-bottom: 5vh;
@@ -206,7 +215,7 @@ main{
 .addToCartButtonMain{
   color:#048B9A !important;
   position: relative;
-  right: 85%;
+  right: 25%;
 }
 .addToCartButtonMain:hover{
   scale: 1.20;
@@ -219,6 +228,8 @@ main{
 }
 #loginPad{
   min-height: 100vh;
+  padding-bottom: 0vh !important;
+
 }
 button {
 	background: none;
