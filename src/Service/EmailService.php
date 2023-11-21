@@ -17,6 +17,9 @@ class EmailService
 
     public function validateEmailFormatAndUniqueness($value, ExecutionContextInterface $context): void
     {
+
+    // Add violations to create errors when you need them
+    
         if (false === strpos($value, '@')) {
             $context->buildViolation('L\'adresse e-mail doit contenir un @.')
                 ->addViolation();

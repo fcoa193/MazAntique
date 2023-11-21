@@ -19,6 +19,8 @@ class SecurityController extends AbstractController
         
         $isUserConnected = false;
         $roleUser = '';
+        
+    // Check if the User is connected
         if ($security->getUser() != null) {
             $isUserConnected = true;
             $roleUser = $security->getUser()->getRoles();

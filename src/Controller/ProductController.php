@@ -125,6 +125,7 @@ class ProductController extends AbstractController
         $likeRepository = $entityManager->getRepository(Liked::class);
         $existingLiked = $likeRepository->findOneBy(['user' => $user, 'product' => $product]);
 
+    // if the like doesn't exist create a new one
         if (!$existingLiked) {
             $like = new Liked();
             $like->setUser($user);
@@ -133,6 +134,8 @@ class ProductController extends AbstractController
             $entityManager->persist($like);
             $entityManager->flush();
         }
+
+    // give a status
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse(['status' => 'liked']);
         }

@@ -45,6 +45,8 @@ class HomeController extends AbstractController
 
         $myDataHome = [];
         foreach ($produ as $prod) {
+            
+        // Create an array with the data I need
             $myDataHome[] = [
                 "productId" => $prod->getId(),
                 "productTitle" => $prod->getTitle(),

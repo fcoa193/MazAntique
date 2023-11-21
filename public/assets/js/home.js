@@ -49,10 +49,10 @@ if (currentPage === "homePage") {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Select all elements with the class "add-to-like-button"
+  // Select all buttons with the class "add-to-like-button"
   const likeButtons = document.querySelectorAll(".add-to-like-button");
 
-  // Loop through each "add-to-like-button" element
+  // Loop through each buttons
   likeButtons.forEach((button) => {
     // Find the heart icon within the button
     const heartIcon = button.querySelector(".card_heart");

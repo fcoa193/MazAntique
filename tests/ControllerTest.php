@@ -10,6 +10,7 @@ class CartControllerTest extends WebTestCase
         $client = static::createClient();
         $entityManager = $client->getContainer()->get('doctrine')->getManager();
 
+// create a User in my fake DB
         $user = new User();
         $user->setFirstName('John');
         $user->setLastName('Jones');
@@ -21,6 +22,7 @@ class CartControllerTest extends WebTestCase
 
         $savedUser = $entityManager->getRepository(User::class)->findOneBy(['email' => 'Jones@jhon.com']);
 
+// Check in my fake DB if the User was indeed added
         $this->assertInstanceOf(User::class, $savedUser);
         $this->assertEquals('John', $savedUser->getFirstName());
         $this->assertEquals('Jones', $savedUser->getLastName());
@@ -36,6 +38,8 @@ class CartControllerTest extends WebTestCase
         $entityManager->getConnection()->beginTransaction();
 
         try {
+            
+// create a new Product in my fake DB
             $product = new Product();
             $product->setImage('Vase.jpg');
             $product->setTitle('Vase');
@@ -48,6 +52,7 @@ class CartControllerTest extends WebTestCase
 
             $savedProduct = $entityManager->getRepository(Product::class)->findOneBy(['title' => 'Vase']);
 
+// Check in my fake DB if the User was added
             $this->assertInstanceOf(Product::class, $savedProduct);
             $this->assertEquals('Vase', $savedProduct->getTitle());
             $this->assertEquals('Vase.jpg', $savedProduct->getImage());

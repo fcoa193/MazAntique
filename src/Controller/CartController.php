@@ -98,10 +98,12 @@ class CartController extends AbstractController
             'user' => $user,
             'product' => $product,
         ]);
-    
+
+    // If there is a Cart item do +1 quantity
         if ($cartItem) {
             $cartItem->setQuantity($cartItem->getQuantity() + 1);
         } else {
+    // Else create a new one
             $cartItem = new Cart();
             $cartItem->setUser($user);
             $cartItem->setProduct($product);
@@ -120,23 +122,26 @@ class CartController extends AbstractController
     public function removeFromCart($cartId, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
+    // If there is no User
         if (!$user) {
             return $this->json(['success' => false, 'message' => 'User is not authenticated.'], 400);
         }
     
         $cartItem = $entityManager->getRepository(Cart::class)->find($cartId);
+    // If there is no Cart Item
         if (!$cartItem) {
             return $this->json(['success' => false, 'message' => 'Cart item not found.'], 404);
         }
-    
+    // If there is cartItem but no User
         if ($cartItem->getUser() !== $user) {
             return $this->json(['success' => false, 'message' => 'Unauthorized.'], 403);
         }
-    
+
+    // If the Quantity is over 0
         if ($cartItem->getQuantity() > 0) {
             $cartItem->setQuantity($cartItem->getQuantity() - 1);
         } else {
-            // If quantity reaches 0, remove the cart item
+    // If quantity reaches 0, remove the cart item
             $entityManager->remove($cartItem);
         }
     
@@ -146,5 +151,4 @@ class CartController extends AbstractController
     
         return $this->redirectToRoute('panier');
     }
-    
 }
