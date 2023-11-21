@@ -3,6 +3,8 @@
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Entity\User;
 use App\Entity\Product;
+use App\Service\PasswordService;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class CartControllerTest extends WebTestCase
 {
@@ -59,8 +61,40 @@ class CartControllerTest extends WebTestCase
             $this->assertEquals(5, $savedProduct->getPromotion());
             $this->assertEquals(500, $savedProduct->getPrice());
             $this->assertEquals('Vase Grecque', $savedProduct->getDescription());
+
+// Prevent changes on the db
         } finally {
             $entityManager->getConnection()->rollBack();
         }
+    }
+
+// Intergration test 
+    public function testHashPassword(): void
+    {
+        // Mocking UserPasswordHasherInterface
+        $userPasswordHasher = $this->createMock(UserPasswordHasherInterface::class);
+
+        $passwordService = new PasswordService($userPasswordHasher);
+
+        // Mock a User
+        $user = new User();
+
+        // Mocking plain password
+        $plainPassword = 'some_password';
+
+        // Mocking hashed password
+        $hashedPassword = 'hashed_password';
+
+        // look if the hashPassword method works
+        $userPasswordHasher->expects($this->once())
+            ->method('hashPassword')
+            ->with($user, $plainPassword)
+            ->willReturn($hashedPassword);
+
+        // Call the method to hash the password
+        $result = $passwordService->hashPassword($user, $plainPassword);
+
+        // Check if the hashing worked
+        $this->assertEquals($hashedPassword, $result);
     }
 }

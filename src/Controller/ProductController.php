@@ -151,10 +151,13 @@ class ProductController extends AbstractController
         $likeRepository = $this->entityManager->getRepository(Liked::class);
         $existingLiked = $likeRepository->findOneBy(['user' => $user, 'product' => $product]);
 
+    // if the like exists remove it
         if ($existingLiked) {
             $this->entityManager->remove($existingLiked);
             $this->entityManager->flush();
         }
+        
+    // give a status
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse(['status' => 'unliked']);
         }
